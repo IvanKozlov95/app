@@ -2,13 +2,56 @@ extends ../layout
 
 block head
 	script(src="/bootstrap-list-filter/bootstrap-list-filter.src.js")
+	script(src="/bootstrap-validator/dist/validator.js")
 
-	script(src="/js/eventHelper.js")
 	script(src="/js/company/search.js")
+	script(src="/js/modal.js")
 
 block content
 	form
 		.form-group.has-feedback
 			input#searchinput.form-control(type='search' placeholder='Название компании...')
-			span.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
-		#searchlist.list-hroup
+			span#clear.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
+		#searchlist.list-group
+
+	#exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel')
+		.modal-dialog(role='document')
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					h4#exampleModalLabel.modal-title Reserve
+				.modal-body
+					form#form-reserve(role='form')
+						.row
+							.col-xs-4
+								.form-group
+									label.control-label(for='date') Дата
+									input#date(type='date' name='date' required='').form-control
+							.col-xs-4
+								.form-group
+									label.control-label(for='time') Время
+									input#time(type='time' name='time' required='').form-control
+							.col-xs-4
+								.form-group
+									label.control-label(for='persons') Кол-во человек
+									input#persons(type='number' name='persons').form-control
+						.row
+							.col-xs-6
+								.form-group
+									label.control-label(for='email') Почта
+									input#phone(type='email' name='email' required='' value='' + (user && user.email || '') placeholder='Почта').form-control
+						.row
+							.col-xs-12
+								.form-group
+									label.control-label(for='message-text') Сообщение для андминистратора:
+									textarea#message-text(name='message').form-control
+						h4
+							span#message.label-danger
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Закрыть
+					button#btn-reserve.btn.btn-primary(type='button') Зарезервировать
+
+block bottom
+	script.
+		saveUser(!{JSON.stringify(user)});
