@@ -5,7 +5,8 @@ head
 	script(src="/bootstrap/dist/js/bootstrap.js")
 	link(href='/bootstrap/dist/css/bootstrap.css' rel='stylesheet')
 
-	script(src='/js/notify.js')
+	script(src="/js/utils/eventHelper.js")
+	script(src='/js/libs/notify.js')
 
 	link(href='//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css', rel='stylesheet')
 	script(src='//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js')
@@ -28,7 +29,7 @@ body
 			div(id='navbar' class='navbar-collapse collapse')
 				ul(class='nav navbar-nav')
 					li
-						a(href='/company/') Profile
+						a(href='/company/profile') Профиль
 					li
 						a(href='/company/search') Поиск
 					li
