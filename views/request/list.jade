@@ -32,7 +32,8 @@ block content
 					td
 						p= (item.client && item.client.name) || 'Нет данных'
 					td
-						span.btn.glyphicon.glyphicon-ok(data-id=''+item._id)
+						//- span.btn.glyphicon.glyphicon-ok(data-id=''+item._id)
+						button.glyphicon-ok= (item.client && item.client.name) || 'asds'
 						a(href='request/info/?id='+item._id)
 							span.btn.glyphicon.glyphicon-info-sign
 						span.btn.glyphicon.glyphicon-remove

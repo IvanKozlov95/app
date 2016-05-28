@@ -5,13 +5,15 @@ $(window).load(() => {
 })
 
 function bindEvents() {
-	eventHelper.addEvent($('.glyphicon-ok'), 'click', submitRequest)
+	// eventHelper.addEvent($('.glyphicon-ok'), 'click', submitRequest)
+	$('.glyphicon-ok').on('click', submitRequest);
 }
 
 function submitRequest(ev) {
 	ev.stopPropagation();
 	var $target = $(ev.target);
 	var id = $target.data('id');
+	console.log(ev.currentTarget);
 	var $tr = $target.closest('tr');
 
 	$.ajax({
