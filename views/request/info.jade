@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+	h4 Заявка
+	h4#status Статус  
+		small= request.status
+	h4 Клиент  
+		a(href='/client/info/?id='+request.client._id)
+			small= request.client.name
+	h4 Компания   
+		a(href='/company/info/?id='+request.company._id)
+			small= request.company.name
+	h3 Информация
+	ul
+		li
+			h4 Дата:   
+				small= request.date.getDate()+'/'+request.date.getMonth()+'/'+request.date.getFullYear()
+		li
+			h4 Время:   
+				small= request.time
+		if request.persons
+			li
+				h4 Кол-во персон   
+					small= request.persons
+		if request.message
+			li
+				h4 Сообщение   
+					small= request.message
+
+block bottom
+	script.
+		$(window).load(() => {
+			var statusTag = $('#status')
+			switch(statusTag.find('small').text()) {
+				case 'New':
+					statusTag.addClass('bg-info')
+					break;
+				case 'Pending':
+					statusTag.addClass('bg-warning')
+					break;
+				case 'Resolved':
+					statusTag.addClass('bg-primary')
+					break;
+				case 'Rejected':
+					statusTag.addClass('bg-danger')
+					break;
+			}
+		})
