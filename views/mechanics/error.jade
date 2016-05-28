@@ -1,0 +1,13 @@
+doctype html
+head
+	script(src='/jquery/dist/jquery.js')
+	script(src="/bootstrap/dist/js/bootstrap.js")
+	link(href='/bootstrap/dist/css/bootstrap.css' rel='stylesheet')
+		
+	link(href='/css/error.css' rel='stylesheet')
+
+body
+	.container
+		h2 Error
+		h3= error.code
+		h4= error.message

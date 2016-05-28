@@ -1,4 +1,8 @@
 table = {}
+types = [
+	{ value: 1, text: 'Текст' },
+	{ value: 2, text: 'Дата' },
+]
 
 $(window).load () ->
 	table = $ '#fields'
@@ -11,8 +15,8 @@ bindEvents = () ->
 	eventHelper.addEvent $('#add-field'), 'click', addNewRow
 	eventHelper.addEvent $('#btn-save'), 'click', save
 
-
-addNewRow = () -> 
+addNewRow = (field) -> 
+	table = $ '#fields'
 	tr = $ '<tr>'
 	tdName = $ '<td>'
 		.attr {
@@ -20,7 +24,7 @@ addNewRow = () ->
 		}
 		.append createEditableField {
 			type: 'text',
-			placeholder: 'Название'
+			name: if field?.name? then field.name else 'Название'
 		}
 	tdType = $ '<td>'
 		.attr {
@@ -28,29 +32,16 @@ addNewRow = () ->
 		}
 		.append createEditableField {
 			type: 'select',
-			title: 'Тип',
-			value: 1,
-			source: [
-				{ value: 1, text: 'Текст' },
-				{ value: 2, text: 'Дата' },
-			]
-		}
-	tdView = $ '<td>'
-		.attr {
-			class: 'view'
-		}
-		.append createEditableField {
-			type: 'select',
 			title: 'Вид',
-			value: 1,
-			source: [
-				{ value: 1, text: 'Строка' },
-				{ value: 2, text: 'Текстовое поле' },
-				{ value: 3, text: 'Картинка' },
-				{ value: 4, text: 'Дата' },
-			]
+			value: if field?.view?.val then field.view.value else 1,
+			source: window.views
 		}
-	tr.append tdName, tdType, tdView
+	td = $ '<td>'
+		.append $('<a>').attr({ href: '#' }).append $('<span>').addClass('glyphicon glyphicon-remove')
+	td.click (ev) ->
+		$(ev.target).closest('tr').hide 100, () ->
+			this.remove()
+	tr.append tdName, tdType, td
 	table.append tr
 
 createEditableField = (options) ->
@@ -60,7 +51,7 @@ createEditableField = (options) ->
 		}
 		.editable options
 	if options.type == 'text'
-		a.text 'Название'
+			a.text options.name 
 	a
 
 save = () -> 
@@ -70,17 +61,21 @@ save = () ->
 		fields.push {
 			name: $(row).find('.name').text()
 			type: $(row).find('.type').text()
-			view: $(row).find('.view').text()
 		}
 
-	formData = new FormData $('#request-info')
-	url = if formData.id then '/requestInfo/update' else '/requestInfo/create'
 	$.ajax {
-		url: url,
+		url: '/request/type/save',
 		method: 'POST',
 		data: {
 			fields: fields,
 			name: $('#request-name').val(),
 			description: $('#request-description').val()
-		}
+		},
+		complete: (jqXHR, status) -> 
+			alert jqXHR.responseText
 	}
+
+window.fillTable = (fields) ->
+	# TODO
+	for field in fields
+		addNewRow field

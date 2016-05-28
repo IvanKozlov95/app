@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+	.row
+		.col-md-3
+			h2 Настройка заявок
+		a(href='/request/type/new')
+			.col-md-2
+					h3
+						span.label.label-info= 'Создать новый тип'
+	table#request-fields.table
+		thead
+			tr
+				th
+				th Тип заявки
+				th Описание
+				th Количество полей
+		tbody
+			each item in items
+				tr
+					td
+						a.detail-icon(href='/request/type/edit/?id=' + item._id)
+							i.glyphicon.glyphicon-plus.icon-plus
+					td
+						p= item.name || 'Нет данных'
+					td
+						p= item.description || 'Нет данных'
+					td
+						p= (item.fields && item.fields.length) || 'Нет данных'

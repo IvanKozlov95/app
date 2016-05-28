@@ -1,0 +1,57 @@
+doctype html
+head
+	meta(charset='utf-8')
+	script(src='/jquery/dist/jquery.js')
+	script(src="/bootstrap/dist/js/bootstrap.js")
+	link(href='/bootstrap/dist/css/bootstrap.css' rel='stylesheet')
+
+	script(src='/js/notify.js')
+
+	link(href='//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/css/bootstrap-editable.css', rel='stylesheet')
+	script(src='//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/bootstrap3-editable/js/bootstrap-editable.min.js')
+
+	link(href='/css/main.css' rel='stylesheet')
+	link(href='/css/footer.css' rel='stylesheet')
+	block head
+body
+	//- navbar
+	nav(class='navbar navbar-default')
+		div.container
+			div.navbar-header
+				button(class='navbar-toggle collapsed' data-toggle='collapse' data-target="#navbar"
+				 aria-expanded="false" aria-controls="navbar")
+					span.sr-only Toggle navigation
+					span.icon-bar
+					span.icon-bar
+					span.icon-bar
+				a(href='/').navbar-brand DoReserve
+			div(id='navbar' class='navbar-collapse collapse')
+				ul(class='nav navbar-nav')
+					li
+						a(href='/company/') Profile
+					li
+						a(href='/company/all') Companies
+					li
+						a(href='/about') About
+				//- login 
+				if !user
+					form(class='navbar-form navbar-right' action='/login' method='post')
+						input(type='text' name='login' placeholder='Your Name').form-control
+						input(type='password' name='password' placeholder='Your Password').form-control
+						button(type='Login' class='btn btn-primary btn-sm') Sign In
+						button(type='button' class='btn btn-primary btn-sm' onclick="window.location.href='/register'") Sign Up
+				else
+					div.navbar-right
+						p.navbar-text
+							= 'Hello, ' + user.name + '! '
+							a(href='/logout') logout
+				//- login end
+	//- navbar end
+	div.container
+		block content
+	footer.footer
+		.container
+			br
+			p.text-muted Ivan Kozlov --- 2016 (c)
+
+block bottom

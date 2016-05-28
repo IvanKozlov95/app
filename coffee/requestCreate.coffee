@@ -12,7 +12,7 @@ getRequestInfo = () ->
 	xhr?.abort()
 
 	$.ajax {
-		url: '/requestInfo/info/',
+		url: '/requestType/info/',
 		method: 'GET'
 		data: {
 			id: select.find('option:selected').val()
@@ -23,7 +23,7 @@ getRequestInfo = () ->
 ajaxComplete = (jqXHR, status) ->
 	if status != 'success' then return alert 'failed'
 
-	info = jqXHR.responseJSON.requestInfo
+	info = jqXHR.responseJSON.requestType
 	views = jqXHR.responseJSON.views
 
 	form = $ '<form>'

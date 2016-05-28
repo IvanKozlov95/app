@@ -1,0 +1,14 @@
+extends ../layout
+
+block head
+	link(href='/css/signin.css' rel='stylesheet')
+
+block content
+	form(action='/login' method='post').form-signin
+		h2.form-signin-heading Вход
+		fieldset
+			label(for='username').sr-only Логин
+			input(type='text' name='login' placeholder='Введите логин').form-control
+			label(for='password').sr-only Пароль
+			input(type='password' name='password' placeholder='Введите пароль').form-control
+			button(type='Login' class='btn btn-lg btn-primary btn-block') Войти

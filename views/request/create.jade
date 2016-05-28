@@ -1,0 +1,17 @@
+extends ../layout
+
+block head
+	script(src="/bootstrap-select/dist/js/bootstrap-select.js")
+	link(href='/bootstrap-select/dist/css/bootstrap-select.css' rel='stylesheet')
+
+	script(src="/js/eventHelper.js")
+	script(src="/js/requestCreate.js")
+
+block content
+	.row
+		.col-md-12
+			.form-group
+				select.selectpicker.form-control#select-RequestType
+					for info, ind in infos
+						option(value=info.id data-width='100%' selected=(ind == 1))= info.name
+	.container#form-container

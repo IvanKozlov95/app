@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+	if (!locals.user || locals.user.__t == 'Client')
+		.row
+			.col-md-2.col-md-offset-5
+				button.btn.btn-lg.btn-primary(onclick='window.location.href="/request/create"') Создать заявку
+
+	//- #myCarousel.carousel.slide(data-ride='carousel')
+	//- 	// Indicators
+	//- 	ol.carousel-indicators
+	//- 		li.active(data-target='#myCarousel', data-slide-to='0')
+	//- 		li(data-target='#myCarousel', data-slide-to='1')
+	//- 		li(data-target='#myCarousel', data-slide-to='2')
+	//- 	// Wrapper for slides
+	//- 	.carousel-inner(role='listbox')
+	//- 		.item.active
+	//- 			img(src='img/carousel-1.jpg')
+	//- 		.item
+	//- 			img(src='img/carousel-2.jpg')
+	//- 		.item
+	//- 			img(src='img/carousel-3.jpg')
+	//- 	// Left and right controls
+	//- 	a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+	//- 		span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
+	//- 		span.sr-only Previous
+	//- 	a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+	//- 		span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
+	//- 		span.sr-only Next

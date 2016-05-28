@@ -1,0 +1,25 @@
+{
+  "name": "app",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "Ivan Kozlov"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/IvanKozlov95/app",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.4",
+    "highcharts": "^4.2.5",
+    "bootstrap-select": "^1.10.0"
+  }
+}

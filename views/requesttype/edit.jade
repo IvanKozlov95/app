@@ -1,0 +1,43 @@
+extends ../layout
+
+block head
+	script(src='/js/eventHelper.js')
+	script(src='/js/requestEdit.js')
+
+block content
+	.row
+		.col-md-1
+			h2= 'Заявка'
+	.row
+		.col-md-1
+			button#btn-save.btn.btn-primary Сохранить
+		.col-md-1
+			button.btn.btn-primary Удалить
+		.col-md-1
+			button#add-field.btn.btn-info Добавить поле
+	br
+	.row
+		form#request-info
+			.col-md-3
+				.form-group
+					span Имя
+					input#request-name(type='text' placeholder='Имя заявки' name='name' value=requestType.name).form-control
+			.col-md-3
+				.form-group
+					span Описание
+					textarea#request-description(placeholder='Описание заявки' name='description').form-control= requestType.description
+	br
+	table(id='fields').table
+		thead
+			tr
+				th Название
+				th Вид
+				th= '   '
+		tbody
+
+block bottom
+	script.
+		window.views = !{JSON.stringify(views)}
+		window.fillTable(!{JSON.stringify(requestType.fields)})
+
+

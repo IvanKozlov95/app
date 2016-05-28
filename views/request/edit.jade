@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+	table#request-fields.table
+		thead
+			tr
+				th Поле
+				th Тип
+				th Вид
+		tbody
+			each field, name in info
+				tr
+					td 
+						a(href='/company/profile/?id='+company.id)
+							if (company.logo)
+								img(src='/logos/' + company.logo height='50' width='50').img-circle
+							else
+								p Link
+					td
+						p= company.name
+					td
+						p= company.address
+					td
+						p= company.phone
+					if (locals.user == undefined || locals.user.__t == 'Client')
+						td
+							button.btn.btn-primary(data-toggle='modal' data-target='#exampleModal' data-companyid=company.id) Reserve table
