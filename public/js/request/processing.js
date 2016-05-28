@@ -1,23 +1,39 @@
 var eventHelper = new EventHelper();
 
 $(window).load(() => {
-	bindEvents();
+	eventHelper.addEvent($('.glyphicon-ok'), 'click', submitRequest);
+	eventHelper.addEvent($('.glyphicon-remove'), 'click', rejectRequest);
 })
 
-function bindEvents() {
-	// eventHelper.addEvent($('.glyphicon-ok'), 'click', submitRequest)
-	$('.glyphicon-ok').on('click', submitRequest);
-}
-
 function submitRequest(ev) {
-	ev.stopPropagation();
 	var $target = $(ev.target);
 	var id = $target.data('id');
-	console.log(ev.currentTarget);
 	var $tr = $target.closest('tr');
 
 	$.ajax({
 		url: '/request/submit',
+		method: 'POST',
+		data: {
+			id: id
+		},
+		complete: (jqXHR, status) => {
+			if (status == 'success') {
+				$.notify(jqXHR.responseJSON, 'info');
+				$tr.remove();
+			} else {
+				$.notify(jqXHR.responseJSON, 'warn')
+			}
+		}
+	});
+}
+
+function rejectRequest(ev) {
+	var $target = $(ev.target);
+	var id = $target.data('id');
+	var $tr = $target.closest('tr');
+
+	$.ajax({
+		url: '/request/reject',
 		method: 'POST',
 		data: {
 			id: id
