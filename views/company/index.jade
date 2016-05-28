@@ -11,12 +11,8 @@ block content
 					h2.form-heaing= company.name
 				.col-md-2.col-md-offset-1
 					h3
-						a(href='reservations')
+						a(href='/request/list/?id='+company._id)
 							span.label.label-info= 'Просмотр заявок'
-				.col-md-2
-					h3
-						a(href='/request/type/list')
-							span.label.label-warning= 'Настройка заявок'
 			input(type='hidden' value=company.id name='id')
 			each value, field in company
 				if (field == 'name' || field == 'username' || field == 'logo' || field == 'description') 
@@ -26,13 +22,13 @@ block content
 						.col-md-1
 							label= field
 						.col-md-2.col-md-offset-1
-							input(type='text' name=field placeholder='Your ' + field value=value)
+							input(type='text' name=field placeholder='Ваш ' + field value=value)
 			.row
 				.form-group
 					.col-md-1
 						label Avatar
 					.col-md-2.col-md-offset-1
-						input(type='file' name='logo')
+						input(type='file' name='avatar')
 			input(type='submit' value='Save').btn.btn-md.btn-primary
 
 		div(class='avatar')
