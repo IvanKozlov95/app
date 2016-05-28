@@ -1,5 +1,7 @@
 node_modules/*
 public/*
+!public/js*
+coffee/*
 bower_components/*
 config/*
 test/*
