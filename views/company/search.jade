@@ -1,0 +1,14 @@
+extends ../layout
+
+block head
+	script(src="/bootstrap-list-filter/bootstrap-list-filter.src.js")
+
+	script(src="/js/eventHelper.js")
+	script(src="/js/company/search.js")
+
+block content
+	form
+		.form-group.has-feedback
+			input#searchinput.form-control(type='search' placeholder='Название компании...')
+			span.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
+		#searchlist.list-hroup

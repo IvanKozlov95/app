@@ -22,6 +22,26 @@ router.get('/', mw.user.isCompany, function(req, res, next) {
 				next(new HtmlError(404));
 			}
 		});
-});
+})
+
+router.get('/search', (req, res, next) => {
+	var name = req.query.name;
+
+	if (name) {
+		var	Company = mongoose.model('Company');
+		var regex = new RegExp(name, 'i');
+		Company
+			.find({ 'name': { $regex: regex } })
+			.lean()
+			.select('name')
+			.exec(function(err, companies) {
+				if (err) return next(err);
+
+				res.json(companies);
+			});
+	} else {
+		res.render('company/search');
+	}
+})
 
 module.exports = router;

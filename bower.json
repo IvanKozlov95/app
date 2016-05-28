@@ -20,6 +20,7 @@
     "bootstrap": "^3.3.6",
     "jquery": "^2.2.4",
     "highcharts": "^4.2.5",
-    "bootstrap-select": "^1.10.0"
+    "bootstrap-select": "^1.10.0",
+    "bootstrap-list-filter": "^0.3.2"
   }
 }
