@@ -27,3 +27,11 @@ exports.isClientOrAnon = function(req, res, next) {
 		? res.redirect('/')
 		: next();
 }
+
+exports.haveRights = (req, res, next) => {
+	req.isAuthenticated()
+		? (req.query.id == req.user.id)
+			? next()
+			: res.redirect('/')
+		: res.redirect('/');
+}
