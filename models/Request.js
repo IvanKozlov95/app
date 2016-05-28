@@ -2,10 +2,12 @@ var mongoose = require('../libs/mongoose'),
     Schema   = mongoose.Schema;
 
 var RequestSchema = new Schema({
-	info: { type: Schema.Types.ObjectId, required: true, ref: 'RequestType' },
-	// field: { type: Schema.Types.ObjectId, required: true, ref: 'Field' },
-	client: { type: Schema.Types.ObjectId, required: true, ref: 'Client' },
+	client: { type: Schema.Types.ObjectId, ref: 'Client' },
+	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	date: Date,
+	message: String,
+	time: String,
+	persons: Number,
 	modified: { type: Date, default: new Date() },
 	status: { type: String, default: 'Новая' }
 });
