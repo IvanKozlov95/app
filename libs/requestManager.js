@@ -41,6 +41,7 @@ class RequestManager {
 					}
 
 					log.info('Сформирована очередь из '+queue.length+' заявок на сегодня - ' + this.date);
+					log.info('Ближайшая заявка на ' + (queue[0] == undefined ? '---' : queue[0].time));
 					resolve(queue)
 				});
 			});
