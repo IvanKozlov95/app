@@ -13,13 +13,13 @@ class HtmlError extends Error {
 		if (!this.message) {
 			switch (this.code) {
 				case 404:
-					this.message = 'Sorry, didn\'t find anything.';
+					this.message = 'Ничего не нашел, вчера тут было, точно помню';
 					break;
 				case 403:
-					this.message = 'You have no rights here.';
+					this.message = 'Ты не пройдешь!';
 					break;
 				default:
-					this.message = 'Ooops, I\'ve got an error.';
+					this.message = 'Ооой, ошибка';
 					break;
 			}
 		}
