@@ -7,6 +7,7 @@ var mongoose   = require('mongoose'),
 class RequestManager {
 	constructor() {
 		this.date = commonUtil.setDateWithOutTime(new Date());
+		this._checkExpiredRequests();
 		this
 			._formQueue()
 			.then((queue) => {
@@ -76,6 +77,29 @@ class RequestManager {
 				throw err;
 			})
 		// send mail
+
+	_checkExpiredRequests() {
+		var Request = mongoose.model('Request');
+		var currentTime = new Date();
+		currentTime = currentTime.getHours()+':'+currentTime.getMinutes();
+		var currentDate = commonUtil.setDateWithOutTime(new Date());
+
+		Request
+			.find({})
+			.where('status', statuses.new)
+			.where('date').lt(currentDate)
+			.lean()
+			.exec((err, requests) => {
+				if (err) throw err;
+				log.info('Менеджер нашел ' + requests.length + ' просроченных заявок');
+
+				requests.forEach((el) => {
+					this._archiveRequest({
+						request: el._id.toString(), 
+						status: statuses.overdue
+					});
+				})
+			})
 	}
 }
 
