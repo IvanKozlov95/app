@@ -7,9 +7,9 @@ var mongoose   = require('mongoose'),
 class RequestManager {
 	constructor() {
 		this.date = commonUtil.setDateWithOutTime(new Date());
-		var promise = this._formQueue()
-		promise.then((queue) => {
-				console.log('hehe')
+		this
+			._formQueue()
+			.then((queue) => {
 				this.queue = queue;
 			});
 	}
@@ -57,7 +57,7 @@ class RequestManager {
 	}
 
 	run() {	
-		this.timer = setInterval(this._sendNotifications.bind(this), 3000)
+		this.timer = setInterval(this._sendNotifications.bind(this), 60000)
 	}
 
 	_archiveRequest(info) {

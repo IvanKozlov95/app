@@ -28,8 +28,12 @@ body
 				a(href='/').navbar-brand DoReserve
 			div(id='navbar' class='navbar-collapse collapse')
 				ul(class='nav navbar-nav')
-					li
-						a(href='/company/profile') Профиль
+					if (locals.user)
+						li
+							if (locals.user.__t == 'Client')
+								a(href='/client/profile') Профиль
+							else
+								a(href='/company/profile') Профиль
 					li
 						a(href='/company/search') Поиск
 					li
