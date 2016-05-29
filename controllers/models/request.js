@@ -68,7 +68,7 @@ router.get('/create', (req, res, next) => {
 
 router.post('/create', (req, res, next) => {
 	var Request = mongoose.model('Request');
-
+	req.body.date = commonUtil.setDateWithOutTime(req.body.date);
 	var _new = new Request(req.body);
 	_new.save((err) => {
 		if (err) return next(err);
@@ -79,11 +79,18 @@ router.post('/create', (req, res, next) => {
 
 router.get('/list', mw.user.haveRights, (req, res, next) => {
 	var Request = mongoose.model('Request');
+	/*
+	 Test.find({
+      $and: [
+          { $or: [{a: 1}, {b: 1}] },
+          { $or: [{c: 1}, {d: 1}] }
+      ]*/
 	var query = { $or: [ { 'client': req.query.id }, 
-						 { 'company': req.query.id }] };
+						 { 'company': req.query.id } ] };
 
 	Request
 		.find(query)
+		.where('status').equals('Новая')
 		.populate('client')
 		.populate('company')
 		.lean()
@@ -101,7 +108,7 @@ router.get('/list', mw.user.haveRights, (req, res, next) => {
 })
 
 router.post('/submit',	mw.user.isCompany,
-						mw.load.requestById(),
+						mw.load.requestById(''),
 						(req, res, next) => {
 							req.request.status = 'Одобрена';
 							req.request.save((err) => {
@@ -112,7 +119,7 @@ router.post('/submit',	mw.user.isCompany,
 })
 
 router.post('/reject',	mw.user.isCompany,
-						mw.load.requestById(),
+						mw.load.requestById(''),
 						(req, res, next) => {
 							req.request.status = 'Отвержена';
 							req.request.save((err) => {
@@ -123,11 +130,22 @@ router.post('/reject',	mw.user.isCompany,
 })
 
 router.get('/info',	mw.user.isAuthentificated,
-						mw.load.requestById('client company'),
-						(req, res, next) => {
-							res.render('request/info', {
-								request: req.request
+					mw.load.requestById('client company'),
+					(req, res, next) => {
+						res.render('request/info', {
+							request: req.request
+						});
+					})
+
+router.get('/bydate', mw.load.requestsByQuery,
+					(req, res, next) => {
+						if (req.xhr) {
+							res.json(req.requests);
+						} else {
+							res.render('request/bydate', {
+								requests: req.requests
 							});
-						})
+						}
+					})
 
 module.exports = router;
