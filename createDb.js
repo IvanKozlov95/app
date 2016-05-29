@@ -12,7 +12,7 @@ function dropDatabase(cb) {
 }
 
 function requireModels(cb) {
-	require('models');
+	require('./models');
 
     async.each(Object.keys[mongoose.models], function(modelName, cb) {
 		mongoose.models[modelName].ensureIndexes(cb);     
