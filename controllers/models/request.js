@@ -66,18 +66,33 @@ router.get('/list', mw.user.haveRights, (req, res, next) => {
 		});
 })
 
-router.post('/submit',	mw.user.isCompany,
+router.post('/submit',	mw.user.isAuthentificated,
 						mw.user.ownRequest,
 						mw.load.requestById(''),
 						(req, res, next) => {
-							req.request.status = 'Одобрена';
-							req.request.save((err) => {
+							var data = req.body.data;
+							if (data && (req.request.date.getTime() != commonUtil.setDateWithOutTime(data.date).getTime()
+								|| req.request.time != data.time)) {
+
 								if (!commonUtil.isDateValid(data.date, data.time)) return next(new HtmlError(400,
 									'Назад в будущее??'));
+
+								req.request.date = data.date;
+								req.request.time = data.time;
+								req.request.status = statuses.pending;
+								req.request.save((err) => {
+									if (err) return next(err);
+
+									return res.status(200).json('Ждем ответа от пользователя');
+								})
+							} else {
+								req.request.status = statuses.accepted;
+								req.request.save((err, request) => {
 												if (err) return next(err);
 
 												res.status(200).json('Заявка одобрена');
 											});
+							}	
 })
 
 router.post('/reject',	mw.user.isCompany,
