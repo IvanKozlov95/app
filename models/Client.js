@@ -10,4 +10,12 @@ var mongoose 	 = require('../libs/mongoose'),
 var ClientSchema = new Schema({
 });
 
+ClientSchema.methods.toJSON = function () {
+	return {
+		id: this._id,
+		email: this.email,
+		avatar: this.avatar
+	}
+}
+
 User.discriminator('Client', ClientSchema);
