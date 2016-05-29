@@ -35,6 +35,7 @@ router.post('/create', (req, res, next) => {
 	req.body.date = commonUtil.setDateWithOutTime(req.body.date);
 	var _new = new Request(req.body);
 	_new.save((err) => {
+	if (!commonUtil.isDateValid(options.date, options.time)) return next(new HtmlError(400, 'Назад в будущее??'));
 		if (err) return next(err);
 
 		res.status(200).json('Заявка была созадана. Письмо отправлено.')
@@ -71,6 +72,8 @@ router.post('/submit',	mw.user.isCompany,
 						(req, res, next) => {
 							req.request.status = 'Одобрена';
 							req.request.save((err) => {
+								if (!commonUtil.isDateValid(data.date, data.time)) return next(new HtmlError(400,
+									'Назад в будущее??'));
 												if (err) return next(err);
 
 												res.status(200).json('Заявка одобрена');
@@ -88,6 +91,7 @@ router.post('/reject',	mw.user.isCompany,
 							})
 })
 
+							if (!commonUtil.isDateValid(req.request.date, req.request.time)) return next(new HtmlError(400, 'Назад в будущее??'));
 router.get('/info',	mw.user.isAuthentificated,
 					mw.load.requestById('client company'),
 					(req, res, next) => {
