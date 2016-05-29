@@ -4,29 +4,8 @@ var express     = require('express'),
 	HtmlError	= require('../../libs/HtmlError'),
 	mw			= require('../../mw/')
 	commonUtil	= require('../../utils/common'),
-	log 	    = require('../../utils/logger')(module);
-
-router.get('/edit', (req, res, next) => {
-	var id = commonUtil.castToObjectId(req.query.id);
-	var	Request = mongoose.model('Request');
-	var RequestType = mongoose.model('RequestType');
-	var Field = mongoose.model('Field');
-
-	if ( !id ) return next(new HtmlError(404));
-
-	Request
-		.findById(id)
-		.populate('info')
-		.populate('client')
-		.lean()
-		.exec((err, request) => {
-			if (err) return next(err);
-
-			res.render('request/edit', {
-				request: request
-			});
-		});
-})
+	log 	    = require('../../utils/logger')(module),
+	statuses   	= require('../../utils/status');
 
 router.get('/', (req, res, next) => {
 	var id = commonUtil.castToObjectId(req.query.id);
@@ -51,21 +30,6 @@ router.get('/', (req, res, next) => {
 		});
 })
 
-router.get('/create', (req, res, next) => {
-	var RequestType = mongoose.model('RequestType');
-
-	RequestType
-		.find()
-		// .populate('fields view')
-		.exec((err, infos) => {
-			if (err) return next(err);
-			
-			res.render('request/create', {
-				infos: infos
-			});
-		})
-})
-
 router.post('/create', (req, res, next) => {
 	var Request = mongoose.model('Request');
 	req.body.date = commonUtil.setDateWithOutTime(req.body.date);
@@ -79,12 +43,6 @@ router.post('/create', (req, res, next) => {
 
 router.get('/list', mw.user.haveRights, (req, res, next) => {
 	var Request = mongoose.model('Request');
-	/*
-	 Test.find({
-      $and: [
-          { $or: [{a: 1}, {b: 1}] },
-          { $or: [{c: 1}, {d: 1}] }
-      ]*/
 	var query = { $or: [ { 'client': req.query.id }, 
 						 { 'company': req.query.id } ] };
 
