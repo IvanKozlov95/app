@@ -105,7 +105,6 @@ class Server {
         var models      = require('../models');
 
         app.use('/request', Controllers.request);
-        app.use('/request/type', Controllers.RequestType);
         app.use('/company', Controllers.company);
         app.use('/login', Controllers.login);
         app.use('/register', Controllers.register);
