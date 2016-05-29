@@ -3,7 +3,7 @@ var RequestManager = require('./libs/requestManager');
 var config = require('./config');
 
 var server = new Server(config.get('port'));
-var requestManager = new RequestManager();
+global.requestManager = new RequestManager();
 
 server.run();
-requestManager.run();
+global.requestManager.run();
