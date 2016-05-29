@@ -15,7 +15,7 @@ const MongoStore = require('connect-mongo')(session);
 class Server {
 	constructor(port) {
 		this.port = port;
-		require('models');
+		require('../models');
 	}
 
 	_initializeExpress() {

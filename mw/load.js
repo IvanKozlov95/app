@@ -1,4 +1,4 @@
-var mongoose    = require('mongoose');
+\var mongoose    = require('mongoose');
 var HtmlError   = require('../libs/HtmlError');
 var commonUtils = require('../utils/common');
 

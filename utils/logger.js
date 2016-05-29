@@ -1,6 +1,6 @@
 var winston = require('winston');
 var ENV = 'development' || process.env.NODE_ENV;
-var config = require('config');
+var config = require('../config');
 
 function getLogger(module) {
     var path = module.filename.split('\\').slice(-2).join('/');
