@@ -1,0 +1,36 @@
+extends ../layout
+
+block head
+
+block content
+	.profile
+		each value, field in client
+			if (field == '_id' || field == 'avatar') 
+						- continue;
+			p.text-primary.text-capitalize= field
+			p.big= value
+		div(class='avatar')
+			img(src='\\avatars\\'+client.avatar alt='avatar' width='200' height='200').img-circle
+	.requests
+		h3.text-primary Текущие заявки
+		#reservations.container
+			.row
+				.col-xs-2
+					p Компания
+				.col-xs-3
+					p Дата
+				.col-xs-2
+					p Время
+				.col-xs-2
+					p Статус
+		each req, ind in requests
+			.row(id = '' + req._id)
+				.col-xs-2 
+					a(href='/company/info/?id=' + req.company._id)= req.company.name
+				.col-xs-3 
+					p= req.date.getDate()+'/'+req.date.getMonth()+'/'+req.date.getFullYear()
+				.col-xs-2 
+					p= req.time
+				.col-xs-2 
+					p= req.status
+		
