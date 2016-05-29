@@ -91,7 +91,24 @@ router.post('/reject',	mw.user.isCompany,
 							})
 })
 
+router.post('/update',	mw.user.isAuthentificated,
+						mw.load.requestById(''),
+						(req, res, next) => {
+							if (req.request.client != req.user.id) return next(new HtmlError(403));
+
+							for (type in req.body.data) {
+								req.request[type] = req.body.data[type];
+							}
+
 							if (!commonUtil.isDateValid(req.request.date, req.request.time)) return next(new HtmlError(400, 'Назад в будущее??'));
+							req.request.save((err, request) => {
+								if (err) return next(err);
+
+								res.status(200).json('Заявка успешно изменена.');
+							});
+						})
+
+
 router.get('/info',	mw.user.isAuthentificated,
 					mw.load.requestById('client company'),
 					(req, res, next) => {
@@ -110,5 +127,28 @@ router.get('/bydate', mw.load.requestsByQuery,
 							});
 						}
 					})
+
+router.post('/delete',	mw.user.isAuthentificated,
+						mw.load.requestById(''),
+						(req, res, next) => {
+							var Request = mongoose.model('Request');
+
+							if (req.request.client != req.user.id) return next(new HtmlError(403));
+
+							Request
+								.archive(req.request.id, 'Удалена')
+								.then(() => {
+									Request
+										.findById(req.request.id)
+										.remove()
+										.exec((err) => {
+											if (err) return next(err);
+
+											res.status(200).json('Заявка была удалена.');
+										});
+									global.requestManager.deleteRequest({ request: req.request.id });
+								})
+								.catch(next);
+						})
 
 module.exports = router;
