@@ -21,16 +21,25 @@ block content
 				th Дата
 				th Время
 				th Клиент
+				th Статус
 				th 
 		tbody
 			each item in requests
 				tr
 					td
-						p= item.date.getDate()+'/'+item.date.getMonth()+'/'+item.date.getFullYear() || 'Нет данных'
+						if user.__t == 'Company'
+							input(type='date' value=''+item.date.getFullYear()+'-'+("0" + (item.date.getMonth() + 1)).slice(-2)+'-'+("0" + (item.date.getDate())).slice(-2)).form-control
+						else
+							p= item.date.getDate()+'/'+("0" + (item.date.getMonth() + 1)).slice(-2)+'/'+item.date.getFullYear() || 'Нет данных'
 					td
-						p= item.time || 'Нет данных'
+						if user.__t == 'Company'
+							input(type='time' name='time' required='' value=''+item.time).form-control
+						else
+							p= item.time || 'Нет данных'
 					td
 						p= (item.client && item.client.name) || 'Нет данных'
+					td
+						p= item.status
 					td
 						span.btn.glyphicon.glyphicon-ok#asd(data-id=''+item._id)
 						a(href='/request/info/?id='+item._id)
