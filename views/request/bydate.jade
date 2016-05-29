@@ -1,0 +1,35 @@
+extends ../layout
+
+block head
+	script(src="/js/request/search.js")
+	script(src="/js/request/processing.js")
+
+block content
+	.row
+		.col-xs-3
+			h2 Текущие заявки
+		.col-xs-3.col-xs-offset-6
+			#custom-search-input(style='padding-top: 20px')
+				.input-group
+					input.search-query-date.form-control(type='date', placeholder='Search' data-company=''+user._id)
+					span.input-group-btn
+						button.btn.btn-danger(type='button')#btn-search
+							span.glyphicon.glyphicon-search
+	table.table
+		thead
+			tr
+				th Дата
+				th Время
+				th Клиент
+		tbody
+			each item in requests
+				tr
+					td
+						p= item.date.getDate()+'/'+item.date.getMonth()+'/'+item.date.getFullYear() || 'Нет данных'
+					td
+						p= item.time || 'Нет данных'
+					td
+						p= (item.client && item.client.name) || 'Нет данных'
+					td
+						a(href='/request/info/?id='+item._id)
+							span.btn.glyphicon.glyphicon-info-sign

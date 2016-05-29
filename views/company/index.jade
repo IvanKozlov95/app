@@ -7,29 +7,33 @@ block content
 	div(id='' + company.id).profile
 		form(role='form')
 			.row
-				.col-md-1
+				.col-xs-1
 					h2.form-heaing= company.name
-				.col-md-2.col-md-offset-1
+				.col-xs-2.col-xs-offset-1
 					h3
 						a(href='/request/list/?id='+company._id)
-							span.label.label-info= 'Просмотр заявок'
+							span.label.label-info= 'Просмотр новых заявок'
+				.col-xs-2.col-xs-offset-1
+					h3
+						a(href='/request/bydate/?company='+company._id+'&date='+new Date())
+							span.label.label-info= 'Заявки на сегодня'
 			input(type='hidden' value=company.id name='id')
 			each value, field in company
 				if (field == 'name' || field == 'username' || field == 'logo' || field == 'description') 
 					- continue;
 				.row
 					.form-group
-						.col-md-1
+						.col-xs-1
 							label= field
-						.col-md-2.col-md-offset-1
+						.col-xs-2.col-xs-offset-1
 							input(type='text' name=field placeholder='Ваш ' + field value=value)
 			.row
 				.form-group
-					.col-md-1
+					.col-xs-1
 						label Avatar
-					.col-md-2.col-md-offset-1
+					.col-xs-2.col-xs-offset-1
 						input(type='file' name='avatar')
-			input(type='submit' value='Save').btn.btn-md.btn-primary
+			input(type='submit' value='Save').btn.btn-xs.btn-primary
 
 		div(class='avatar')
 			img(src='\\avatars\\'+company.avatar alt='avatar' width='200' height='200').img-circle
