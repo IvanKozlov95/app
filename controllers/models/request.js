@@ -90,6 +90,8 @@ router.post('/submit',	mw.user.isAuthentificated,
 								req.request.save((err, request) => {
 												if (err) return next(err);
 
+												global.requestManager.addRequest(request.id);
+
 												res.status(200).json('Заявка одобрена');
 											});
 							}	
@@ -98,9 +100,14 @@ router.post('/submit',	mw.user.isAuthentificated,
 router.post('/reject',	mw.user.isCompany,
 						mw.load.requestById(''),
 						(req, res, next) => {
-							req.request.status = 'Отвержена';
+							req.request.status = statuses.rejected;
 							req.request.save((err) => {
 								if (err) return next(err);
+
+								global.requestManager.deleteRequest({ 
+									company: req.user.id,
+									request: req.request._id.toString()
+								});
 
 								res.status(200).json('Заявка отвергнута.');
 							})
