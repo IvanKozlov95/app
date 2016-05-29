@@ -26,15 +26,15 @@ class RequestManager {
 				.sort('time')
 				.populate('client company')
 				.lean()
-				.exec((err, reuqests) => {
+				.exec((err, requests) => {
 					if (err) reject(err);
 
-					for (var i in reuqests) {
+					for (var i in requests) {
 						queue.push({
-							request: reuqests[i]._id,
-							time: reuqests[i].time,
-							client: reuqests[i].client.email,
-							company: reuqests[i].company.email
+							request: requests[i]._id.toString(),
+							time: requests[i].time,
+							client: requests[i].client.email,
+							company: requests[i].company.email
 						})
 					}
 
