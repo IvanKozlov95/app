@@ -78,6 +78,42 @@ class RequestManager {
 			})
 		// send mail
 
+	deleteRequest(options) {
+		for (var i = 0; i < this.queue.length; i++) {
+			if (this.queue[i].request == options.request) {
+				this.queue.splice(i, 1);
+
+				log.info('Менджер удалил 1 заявку из очереди. id: ' + options.request);
+				return;
+			}
+		}
+	}
+
+	addRequest(id) {
+		var Request = mongoose.model('Request');
+
+		Request
+				.findById(id)
+				.where('date').equals(this.date.toString())
+				.populate('client company')
+				.lean()
+				.exec((err, request) => {
+					if (err) throw err;
+					if (request) {
+						var ind = findInsertionPoint(this.queue, request.time, myComparator);
+						this.queue.splice(ind, 0, {
+							request: request._id.toString(),
+							time: request.time,
+							client: request.client.email,
+							company: request.company.email
+						});
+						log.info('Менеджер добавил новую завку в очередь. id: ' + id);
+					} else {
+						log.info('Новая заявка не на сегодня. id: ' + id);
+					}
+				});
+	}
+
 	_checkExpiredRequests() {
 		var Request = mongoose.model('Request');
 		var currentTime = new Date();
@@ -104,3 +140,31 @@ class RequestManager {
 }
 
 module.exports = RequestManager;
+
+/**
+ * Find insertion point for a value val, as specified by the comparator 
+ * (a function)
+ * @param sortedArr The sorted array
+ * @param val The value for which to find an insertion point (index) in the array
+ * @param comparator The comparator function to compare two values
+ */
+function findInsertionPoint(sortedArr, val, comparator) {   
+   var low = 0, high = sortedArr.length;
+   var mid = -1, c = 0;
+   while(low < high)   {
+      mid = parseInt((low + high)/2);
+      c = comparator(sortedArr[mid], val);
+      if(c < 0)   {
+         low = mid + 1;
+      }else if(c > 0) {
+         high = mid;
+      }else {
+         return mid;
+      }
+   }
+   return low;
+}
+
+function myComparator(el1, el2)  {
+   return el1.time.localeCompare(el2.time);
+}
