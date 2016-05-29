@@ -11,7 +11,7 @@ var router    = require('express').Router(),
  	upload	  = multer({ storage: storages.logoStorage });
 
 router.get('/', mw.user.isAnon, function(req, res, next) {
-	res.render('register');
+	res.render('mechanics/register');
 });
 
 router.post('/', upload.single('logo'), function(req, res, next) {

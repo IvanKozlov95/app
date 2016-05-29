@@ -44,7 +44,6 @@ class Server {
 		* Loading user to res.locals down here
 		*/
 		app.use(require('../mw/loadUser'));
-		// app.use(require('../mw/loadViews'));
 
         this._setRoutes();
 
@@ -106,6 +105,7 @@ class Server {
 
         app.use('/request', Controllers.request);
         app.use('/company', Controllers.company);
+        app.use('/client', Controllers.client);
         app.use('/login', Controllers.login);
         app.use('/register', Controllers.register);
         app.use('/logout', Controllers.logout);
