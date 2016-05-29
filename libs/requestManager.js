@@ -2,7 +2,8 @@
 
 var mongoose   = require('mongoose'),
 	commonUtil = require('../utils/common'),
-	log 	   = require('../utils/logger')(module);
+	log 	   = require('../utils/logger')(module),
+	statuses   = require('../utils/status');
 
 class RequestManager {
 	constructor() {
@@ -23,6 +24,7 @@ class RequestManager {
 			Request
 				.find({})
 				.where('date').equals(this.date.toString())
+				.where('status', statuses.accepted)
 				.sort('time')
 				.populate('client company')
 				.lean()
@@ -38,7 +40,7 @@ class RequestManager {
 						})
 					}
 
-					log.info('Сформирована очередь '+queue.length+' заявок на сегодня - ' + this.date);
+					log.info('Сформирована очередь из '+queue.length+' заявок на сегодня - ' + this.date);
 					resolve(queue)
 				});
 			});
@@ -49,12 +51,14 @@ class RequestManager {
 		currentTime = currentTime.getHours()+':'+currentTime.getMinutes();
 		var i = 0;
 		while (this.queue.length > 0 && currentTime >= this.queue[0].time) {
-			this._archiveRequest(this.queue.shift());
+			this._archiveRequest({ 
+				request: this.queue.shift().request, 
+				status: statuses.done
+			});
 			i++;
 		}
 	
 		log.info('Послал '+i+' уведомлений');			
-
 	}
 
 	run() {	
@@ -63,7 +67,7 @@ class RequestManager {
 
 	_archiveRequest(info) {
 		var Request = mongoose.model('Request');
-		var promise = Request.archive(info.request, 'Выполнена');
+		var promise = Request.archive(info.request, info.status);
 		promise
 			.then(() => {
 				Request
@@ -71,12 +75,15 @@ class RequestManager {
 					.remove()
 					.exec((err) => {
 						if (err) throw err;
+
+						log.info('Менджер заархивировал 1 заявку. id: ' + info.request + '. Статус: ' + info.status);
 					});
 			})
 			.catch((err) => {
 				throw err;
 			})
-		// send mail
+		// todo: send mail
+	}
 
 	deleteRequest(options) {
 		for (var i = 0; i < this.queue.length; i++) {

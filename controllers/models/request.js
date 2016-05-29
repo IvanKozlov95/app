@@ -31,11 +31,14 @@ router.get('/', (req, res, next) => {
 })
 
 router.post('/create', (req, res, next) => {
+	var options = req.body;
 	var Request = mongoose.model('Request');
-	req.body.date = commonUtil.setDateWithOutTime(req.body.date);
-	var _new = new Request(req.body);
-	_new.save((err) => {
+	options.date = commonUtil.setDateWithOutTime(options.date);
+
 	if (!commonUtil.isDateValid(options.date, options.time)) return next(new HtmlError(400, 'Назад в будущее??'));
+
+	var _new = new Request(options);
+	_new.save((err, request) => {
 		if (err) return next(err);
 
 		res.status(200).json('Заявка была созадана. Письмо отправлено.')
@@ -46,12 +49,13 @@ router.get('/list', mw.user.haveRights, (req, res, next) => {
 	var Request = mongoose.model('Request');
 	var query = { $or: [ { 'client': req.query.id }, 
 						 { 'company': req.query.id } ] };
-
+	var isCompany = req.user.__t == 'Company' ? true : false;
 	Request
 		.find(query)
-		.where('status').equals('Новая')
+		.where('status').equals(statuses.new)
 		.populate('client')
 		.populate('company')
+		.sort('date time')
 		.lean()
 		.exec((err, requests) => {
 			if (err) return next(err);
@@ -59,6 +63,7 @@ router.get('/list', mw.user.haveRights, (req, res, next) => {
 			if (requests) {
 				res.render('request/list', {
 					requests: requests,
+					isCompany: isCompany
 				});
 			} else {
 				next(new HtmlError(404));

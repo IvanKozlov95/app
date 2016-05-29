@@ -33,7 +33,7 @@ function validateForm(ev) {
 
 function makeReservation() {
 	var data = form.serialize();
-	data += '&client='+user._id+'&company='+companyId;
+	data += '&client='+user.id+'&company='+companyId;
 	return $.ajax({
 		url: '/request/create',
 		method: 'POST',

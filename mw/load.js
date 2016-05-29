@@ -1,6 +1,7 @@
-\var mongoose    = require('mongoose');
+var mongoose   = require('mongoose');
 var HtmlError   = require('../libs/HtmlError');
 var commonUtils = require('../utils/common');
+var statuses   	= require('../utils/status');
 
 module.exports = {
 	requestById: loadRequestById,
@@ -10,8 +11,8 @@ module.exports = {
 function loadRequestById(populate) {
 	return function(req, res, next) {
 		var Request = mongoose.model('Request');
-		var id = req.query.id || req.body.id;
-
+		var id = req.query.id || req.body.request;
+		
 		Request
 			.findById(id)
 			.populate(populate)
@@ -22,7 +23,7 @@ function loadRequestById(populate) {
 					req.request = request;
 					next();
 				} else {
-					next(new HtmlError(404));
+					next(new HtmlError(404, 'Заявка не найдена'));
 				}
 			});
 	}
@@ -39,6 +40,8 @@ function loadRequestsByQuery(req, res, next) {
 	for (condition in req.query) {
 		query.where(condition, req.query[condition]);
 	}
+
+	query.where('status', statuses.accepted);
 
 	query
 		.lean()

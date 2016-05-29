@@ -1,4 +1,6 @@
 var eventHelper = new EventHelper();
+var xhr;
+var queue = [];
 
 $(window).load(() => {
 	eventHelper.addEvent($('.glyphicon-ok'), 'click', submitRequest);
@@ -9,12 +11,18 @@ function submitRequest(ev) {
 	var $target = $(ev.target);
 	var id = $target.data('id');
 	var $tr = $target.closest('tr');
+	var date = $tr.find('input[type=date]').val()
+	var time = $tr.find('input[type=time]').val()
 
 	$.ajax({
 		url: '/request/submit',
 		method: 'POST',
 		data: {
-			id: id
+			request: id,
+			data: {
+				date: date,
+				time: time
+			}
 		},
 		complete: (jqXHR, status) => {
 			if (status == 'success') {
@@ -36,7 +44,7 @@ function rejectRequest(ev) {
 		url: '/request/reject',
 		method: 'POST',
 		data: {
-			id: id
+			request: id
 		},
 		complete: (jqXHR, status) => {
 			if (status == 'success') {
