@@ -1,3 +1,6 @@
+var mongoose  = require('../libs/mongoose'),
+	HtmlError = require('../libs/HtmlError');
+
 exports.isAuthentificated = function (req, res, next){
   req.isAuthenticated()
     ? next()
@@ -34,4 +37,23 @@ exports.haveRights = (req, res, next) => {
 			? next()
 			: res.redirect('/')
 		: res.redirect('/');
+}
+
+
+exports.ownRequest = (req, res, next) => {
+	var Request = mongoose.model('Request');
+	var id = req.query.id || req.body.request;
+
+	Request
+		.findById(id)
+		.lean()
+		.exec((err, request) => {
+			if (err) return next(err);
+
+			if (request) {
+				return next();
+			} else {
+				return next(new HtmlError(404, 'Заявка не найдена'))
+			}
+		})
 }

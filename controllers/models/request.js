@@ -66,6 +66,7 @@ router.get('/list', mw.user.haveRights, (req, res, next) => {
 })
 
 router.post('/submit',	mw.user.isCompany,
+						mw.user.ownRequest,
 						mw.load.requestById(''),
 						(req, res, next) => {
 							req.request.status = 'Одобрена';
