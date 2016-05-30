@@ -16,8 +16,8 @@ CompanySchema.methods.toJSON = function() {
     email: this.email,
     phone: this.phone,
     address: this.address,
-    _logo: this.avatar, 
-    description: this.description
+    _avatar: this.avatar, 
+    _description: this.description
   }
 }
 

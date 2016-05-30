@@ -9,13 +9,12 @@ var express   	  = require('express'),
 router.get('/profile', mw.user.isCompany, function(req, res, next) {
 	Company
 		.findById(req.user.id)
-		.lean()
 		.exec((err, company) => {
 			if (err) return next(err);
 
 			if (company) {
 				res.render('company/index', { 
-					company: company
+					company: company.toJSON()
 				})
 			} else {
 				log.warn('Couldn\'t a company but it should be here. Id: ' + res.user.id);
