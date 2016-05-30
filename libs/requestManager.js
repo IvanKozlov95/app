@@ -132,7 +132,6 @@ class RequestManager {
 
 		Request
 			.find({})
-			.where('status', statuses.new)
 			.where('date').lt(currentDate)
 			.lean()
 			.exec((err, requests) => {
@@ -142,7 +141,7 @@ class RequestManager {
 				requests.forEach((el) => {
 					this._archiveRequest({
 						request: el._id.toString(), 
-						status: statuses.overdue
+						status: el.status == statuses.new ? statuses.overdue : statuses.done
 					});
 				})
 			})
