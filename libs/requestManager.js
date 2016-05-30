@@ -51,7 +51,9 @@ class RequestManager {
 		var currentTime = new Date();
 		currentTime = currentTime.getHours()+':'+currentTime.getMinutes();
 		var i = 0;
-		while (this.queue.length > 0 && currentTime >= this.queue[0].time) {
+		while (this.queue 
+				&& this.queue.length > 0 
+				&& currentTime >= this.queue[0].time) {
 			this._archiveRequest({ 
 				request: this.queue.shift().request, 
 				status: statuses.done
