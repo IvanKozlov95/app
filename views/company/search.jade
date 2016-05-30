@@ -8,11 +8,14 @@ block head
 	script(src="/js/modal.js")
 
 block content
-	form
-		.form-group.has-feedback
-			input#searchinput.form-control(type='search' placeholder='Название компании...')
-			span#clear.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
-		#searchlist.list-group
+	#home
+	.row
+		.col-xs-8.col-xs-offset-2
+			form
+				.form-group.has-feedback
+					input#searchinput.form-control(type='search' placeholder='Название компании...')
+					span#clear.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
+			#searchlist.list-group
 
 	#exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel')
 		.modal-dialog(role='document')
@@ -52,6 +55,5 @@ block content
 					button.btn.btn-default(type='button', data-dismiss='modal') Закрыть
 					button#btn-reserve.btn.btn-primary(type='button') Зарезервировать
 
-block bottom
 	script.
 		saveUser(!{JSON.stringify(user)});
