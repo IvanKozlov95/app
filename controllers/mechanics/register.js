@@ -10,9 +10,15 @@ var router    = require('express').Router(),
  	multer	  = require('multer'),
  	upload	  = multer({ storage: storages.logoStorage });
 
-router.get('/', mw.user.isAnon, function(req, res, next) {
-	res.render('mechanics/register');
-});
+router.get('/', mw.user.isAnon, 
+				function(req, res, next) {
+					log.info(req.query)
+					if (!req.query.user) return next(new HtmlError(404));
+
+					res.render('mechanics/register', {
+						user: req.query.user
+					});
+				});
 
 router.post('/', upload.single('logo'), function(req, res, next) {
 	var user = new Client( {
