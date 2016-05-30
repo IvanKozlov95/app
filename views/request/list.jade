@@ -5,43 +5,46 @@ block head
 	script(src="/js/request/processing.js")
 
 block content
-	.row
-		.col-xs-3
-			h2 Текущие заявки
-		.col-xs-6.col-xs-offset-3
-			#custom-search-input(style='padding-top: 20px')
-				.input-group
-					input.search-query.form-control(type='text', placeholder='Search')
-					span.input-group-btn
-						button.btn.btn-danger(type='button')#btn-search
-							span.glyphicon.glyphicon-search
-	table.table
-		thead
-			tr
-				th Дата
-				th Время
-				th Клиент
-				th Статус
-				th 
-		tbody
-			each item in requests
-				tr
-					td
-						if user.__t == 'Company'
-							input(type='date' value=''+item.date.getFullYear()+'-'+("0" + (item.date.getMonth() + 1)).slice(-2)+'-'+("0" + (item.date.getDate())).slice(-2)).form-control
-						else
-							p= item.date.getDate()+'/'+("0" + (item.date.getMonth() + 1)).slice(-2)+'/'+item.date.getFullYear() || 'Нет данных'
-					td
-						if user.__t == 'Company'
-							input(type='time' name='time' required='' value=''+item.time).form-control
-						else
-							p= item.time || 'Нет данных'
-					td
-						p= (item.client && item.client.name) || 'Нет данных'
-					td
-						p= item.status
-					td
-						span.btn.glyphicon.glyphicon-ok#asd(data-id=''+item._id)
-						a(href='/request/info/?id='+item._id)
-							span.btn.glyphicon.glyphicon-info-sign
-						span.btn.glyphicon.glyphicon-remove(data-id=''+item._id)
+	#home
+	.container
+		.row
+			.col-xs-3
+				h2 Текущие заявки
+			.col-xs-6.col-xs-offset-3
+				#custom-search-input(style='padding-top: 20px')
+					.input-group
+						input.search-query.form-control(type='text', placeholder='Search')
+						span.input-group-btn
+							button.btn.btn-danger(type='button')#btn-search
+								span.glyphicon.glyphicon-search
+		.row
+			table.table
+				thead
+					tr
+						th Дата
+						th Время
+						th Клиент
+						th Статус
+						th 
+				tbody
+					each item in requests
+						tr
+							td
+								if user.__t == 'Company'
+									input(type='date' value=''+item.date.getFullYear()+'-'+("0" + (item.date.getMonth() + 1)).slice(-2)+'-'+("0" + (item.date.getDate())).slice(-2)).form-control
+								else
+									p= item.date.getDate()+'/'+("0" + (item.date.getMonth() + 1)).slice(-2)+'/'+item.date.getFullYear() || 'Нет данных'
+							td
+								if user.__t == 'Company'
+									input(type='time' name='time' required='' value=''+item.time).form-control
+								else
+									p= item.time || 'Нет данных'
+							td
+								p= (item.client && item.client.name) || 'Нет данных'
+							td
+								p= item.status
+							td
+								span.btn.glyphicon.glyphicon-ok#asd(data-id=''+item._id)
+								a(href='/request/info/?id='+item._id)
+									span.btn.glyphicon.glyphicon-info-sign
+								span.btn.glyphicon.glyphicon-remove(data-id=''+item._id)
