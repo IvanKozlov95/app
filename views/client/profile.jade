@@ -4,57 +4,63 @@ block head
 	script(src="/js/edit.js")
 
 block content
-	.profile
-		each value, field in client
-			if (field == '_id' || field == 'avatar') 
-						- continue;
-			p.text-primary.text-capitalize= field
-			p.big= value
-		//- div(class='avatar')
-		//- 	img(src='\\avatars\\'+client.avatar alt='avatar' width='200' height='200').img-circle
-	br
-	br
-	.requests
-		h3.text-primary Текущие заявки
-		.container
-			.row
-				.col-xs-2
-					p Компания
-				.col-xs-2
-					p Дата
-				.col-xs-2
-					p Время
-				.col-xs-2
-					p Статус
-		each req, ind in requests
-			br
-			#requests
-				.row(id = '' + req._id)
-					.col-xs-2 
-						a(href='/company/info/?id=' + req.company._id)= req.company.name
-					.col-xs-2
-						if req.status == 'Новая'
-							script.
-								alert(!{JSON.stringify(req.date)})
-
-							input(type='date' value=''+req.date.getFullYear()+'-'+("0" + (req.date.getMonth() + 1)).slice(-2)+'-'+("0" + (req.date.getDate())).slice(-2)).form-control
-						else 
-							p= req.date.getFullYear()+'-'+("0" + (req.date.getMonth() + 1)).slice(-2)+'-'+req.date.getDate()
-					.col-xs-2 
-						if req.status == 'Новая'
-							input(type='time' name='time' required='' value=''+req.time).form-control
-						else 
-							p= req.time
-					.col-xs-2.status-text 
-						p= req.status
-					if req.status == 'Рассматривается'
-						.col-xs-1  
-							a
-								span.glyphicon.glyphicon-ok
-					else 
-						.col-xs-1
-					.col-xs-1  
-						a
-							span.glyphicon.glyphicon-remove
+	#home
+	.container
+		.profile
+			each value, field in client
+				if (field == '_id' || field == 'avatar') 
+							- continue;
+				p.text-primary.text-capitalize= field
+				p.big= value
+			//- div(class='avatar')
+			//- 	img(src='\\avatars\\'+client.avatar alt='avatar' width='200' height='200').img-circle
+		br
+		br
+		.requests
+			h3.text-primary Текущие заявки
+			if (requests.length > 0)
+				.container
+					.row
+						.col-xs-2
+							p Компания
+						.col-xs-2
+							p Дата
+						.col-xs-2
+							p Время
+						.col-xs-2
+							p Статус
+				each req, ind in requests
 					br
+					#requests
+						.row(id = '' + req._id)
+							.col-xs-2 
+								a(href='/company/?id=' + req.company._id)= req.company.name
+							.col-xs-2
+								if req.status == 'Новая'
+									script.
+										alert(!{JSON.stringify(req.date)})
+
+									input(type='date' value=''+req.date.getFullYear()+'-'+("0" + (req.date.getMonth() + 1)).slice(-2)+'-'+("0" + (req.date.getDate())).slice(-2)).form-control
+								else 
+									p= req.date.getFullYear()+'-'+("0" + (req.date.getMonth() + 1)).slice(-2)+'-'+req.date.getDate()
+							.col-xs-2 
+								if req.status == 'Новая'
+									input(type='time' name='time' required='' value=''+req.time).form-control
+								else 
+									p= req.time
+							.col-xs-2.status-text 
+								p= req.status
+							if req.status == 'Рассматривается'
+								.col-xs-1  
+									a
+										span.glyphicon.glyphicon-ok
+							else 
+								.col-xs-1
+							.col-xs-1  
+								a
+									span.glyphicon.glyphicon-remove
+							br
+			else
+				h3
+					strong Заявок нет
 		
