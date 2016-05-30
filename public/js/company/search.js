@@ -23,7 +23,7 @@ $(window).load(() => {
 							</p>\
 						</div>\
 						<div calss="col-sm-2 col-sm-offset-10" >\
-							<img src="/avatars/{avatar}" height="100" width="100" />\
+							<img src="/avatars/{avatar}" height="150" width="150" />\
 						</div>\
 					</div>\
 				</div>',
