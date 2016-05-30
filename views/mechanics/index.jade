@@ -1,29 +1,70 @@
 extends ../layout
 
 block content
-	if (!locals.user || locals.user.__t == 'Client')
-		.row
-			.col-md-2.col-md-offset-5
-				button.btn.btn-lg.btn-primary(onclick='window.location.href="/request/create"') Создать заявку
-
-	//- #myCarousel.carousel.slide(data-ride='carousel')
-	//- 	// Indicators
-	//- 	ol.carousel-indicators
-	//- 		li.active(data-target='#myCarousel', data-slide-to='0')
-	//- 		li(data-target='#myCarousel', data-slide-to='1')
-	//- 		li(data-target='#myCarousel', data-slide-to='2')
-	//- 	// Wrapper for slides
-	//- 	.carousel-inner(role='listbox')
-	//- 		.item.active
-	//- 			img(src='img/carousel-1.jpg')
-	//- 		.item
-	//- 			img(src='img/carousel-2.jpg')
-	//- 		.item
-	//- 			img(src='img/carousel-3.jpg')
-	//- 	// Left and right controls
-	//- 	a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
-	//- 		span.glyphicon.glyphicon-chevron-left(aria-hidden='true')
-	//- 		span.sr-only Previous
-	//- 	a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
-	//- 		span.glyphicon.glyphicon-chevron-right(aria-hidden='true')
-	//- 		span.sr-only Next
+	// Header section
+	#home.container
+		.row.text-center
+			.col-md-3.head-main
+				i.fa.fa-plus-circle.color-blue
+				h3
+					a(href='/login') Зарегистрироваться
+			.col-md-3.head-main
+				i.fa.fa-search.color-blue
+				h3
+					a(href='/com') Забронировать столик
+			.col-md-3.head-main
+				i.fa.fa-star-o.color-blue
+				h3
+					a(href='#contact') Популярные компании
+			.col-md-3.head-main
+				i.fa.fa-users.color-blue
+				h3
+					a(href='#services') Вы - компания
+	// End Header section
+	// About Section
+	section#about.for-full-back.color-light
+	.container
+		.row.text-center
+			.col-md-8.col-md-offset-2
+				h1 ABOUT COMPANY
+				h4
+					strong
+						| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+						| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+		.row.text-center
+			.col-md-12
+				h2 Lorem ipsum dolor sit amet
+				p
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+		.row.text-center.space-pad
+			.col-md-3
+				.about-div
+					i.fa.fa-camera.fa-4x.color-blue
+					h3 30+ Clients 
+			.col-md-3
+				.about-div
+					i.fa.fa-briefcase.fa-4x.color-blue
+					h3 90+ Projects	
+			.col-md-3
+				.about-div
+					i.fa.fa-desktop.fa-4x.color-blue
+					h3 40+ Offices 
+			.col-md-3
+				.about-div
+					i.fa.fa-folder.fa-4x.color-blue
+					h3 10+ Countries 
