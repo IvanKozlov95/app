@@ -17,12 +17,12 @@ $(window).load(() => {
 						</div>\
 					</div>\
 					<div class="row">\
-						<div class="col-sm-10">\
+						<div class="col-sm-9">\
 							<p class="list-group-item-text">\
 								{description}\
 							</p>\
 						</div>\
-						<div calss="col-sm-2 col-sm-offset-10" >\
+						<div calss="col-sm-2" >\
 							<img src="/avatars/{avatar}" height="150" width="150" />\
 						</div>\
 					</div>\
