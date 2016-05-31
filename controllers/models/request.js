@@ -150,7 +150,8 @@ router.get('/bydate', mw.load.requestsByQuery,
 							res.json(req.requests);
 						} else {
 							res.render('request/bydate', {
-								requests: req.requests
+								requests: req.requests,
+								date: req.query.date
 							});
 						}
 					})
