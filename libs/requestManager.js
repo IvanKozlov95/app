@@ -97,6 +97,8 @@ class RequestManager {
 				return;
 			}
 		}
+
+		this._archiveRequest(options);
 	}
 
 	addRequest(id) {

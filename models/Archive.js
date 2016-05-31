@@ -7,7 +7,8 @@ var ArchiveSchema = new Schema({
 	date: Date,
 	time: String,
 	persons: Number,
-	status: String
+	status: String,
+	message2: String
 });
 
 

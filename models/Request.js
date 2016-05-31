@@ -6,6 +6,7 @@ var RequestSchema = new Schema({
 	company: { type: Schema.Types.ObjectId, ref: 'Company' },
 	date: Date,
 	message: String,
+	message2: String,
 	time: String,
 	persons: Number,
 	modified: { type: Date, default: new Date() },
@@ -27,19 +28,6 @@ RequestSchema.statics.create = function(options, cb) {
 		.catch(cb);
 }
 
-RequestSchema.methods.createInfoEntity = function(options) {
-	var RequestType = mongoose.model('RequestType');
-
-	return new Promise((resolve, reject) => {
-		var _new = new RequestType();
-		_new.save((err, info) => {
-			if (err) return reject(err);
-
-			resolve(info.id);
-		});
-	});
-}
-
 RequestSchema.statics.archive = function(id, status) {
 	var Archive = mongoose.model('Archive');
 
@@ -50,7 +38,8 @@ RequestSchema.statics.archive = function(id, status) {
 			.exec((err, request) => {
 				if (err) reject(err);
 
-				request.status = status;
+				if (status) request.status = status;
+				
 				var _new = new Archive(request);
 				_new.save((err) => {
 					if (err) reject(err);

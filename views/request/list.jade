@@ -44,7 +44,10 @@ block content
 							td
 								p= item.status
 							td
-								span.btn.glyphicon.glyphicon-ok#asd(data-id=''+item._id)
-								a(href='/request/info/?id='+item._id)
-									span.btn.glyphicon.glyphicon-info-sign
-								span.btn.glyphicon.glyphicon-remove(data-id=''+item._id)
+								button.btn.btn-success.btn-xs.btn-ok(data-id=''+item._id)
+									span.btn.glyphicon.glyphicon-ok#asd(data-id=''+item._id)
+								button.btn.btn-xs
+									a(href='/request/info/?id='+item._id)
+										span.btn.glyphicon.glyphicon-info-sign
+								button.btn.btn-danger.btn-xs.btn-remove(data-id=''+item._id)
+									span.btn.glyphicon.glyphicon-remove(data-id=''+item._id)

@@ -106,12 +106,14 @@ router.post('/reject',	mw.user.isCompany,
 						mw.load.requestById(''),
 						(req, res, next) => {
 							req.request.status = statuses.rejected;
+							req.request.message2 = req.body.message2;
 							req.request.save((err) => {
 								if (err) return next(err);
 
 								global.requestManager.deleteRequest({ 
 									company: req.user.id,
-									request: req.request._id.toString()
+									request: req.request._id.toString(),
+									status: req.request.status
 								});
 
 								res.status(200).json('Заявка отвергнута.');

@@ -3,8 +3,8 @@ var xhr;
 var queue = [];
 
 $(window).load(() => {
-	eventHelper.addEvent($('.glyphicon-ok'), 'click', submitRequest);
-	eventHelper.addEvent($('.glyphicon-remove'), 'click', rejectRequest);
+	eventHelper.addEvent($('.btn-ok'), 'click', submitRequest);
+	eventHelper.addEvent($('.btn-remove'), 'click', rejectRequest);
 })
 
 function submitRequest(ev) {
@@ -35,6 +35,10 @@ function submitRequest(ev) {
 	});
 }
 
+function askWhy() {
+	return prompt('Почему?', 'Укажите причину отказа');
+}
+
 function rejectRequest(ev) {
 	var $target = $(ev.target);
 	var id = $target.data('id');
@@ -44,7 +48,8 @@ function rejectRequest(ev) {
 		url: '/request/reject',
 		method: 'POST',
 		data: {
-			request: id
+			request: id,
+			message2: askWhy()
 		},
 		complete: (jqXHR, status) => {
 			if (status == 'success') {
