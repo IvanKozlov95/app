@@ -1,0 +1,16 @@
+extends ../layout
+
+block head
+
+block content
+	#home
+	.container.text-left
+		.profile
+			each value, field in company
+				if (field == 'avatar') 
+							- continue;
+				h3
+					strong.text-capitalize= field + ':  '
+					small= value
+			div(class='avatar')
+					img(src='\\avatars\\'+company.avatar alt='avatar' width='200' height='200').img-circle

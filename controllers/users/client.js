@@ -26,4 +26,25 @@ router.get('/profile',	mw.user.isClient,
 								})
 						})
 
+router.get('/', (req, res, next) => {
+	var id = req.query.id;
+	var Client = mongoose.model('Client');
+
+	Client
+		.findById(id)
+		.select('-hashedPassword -salt -login -_id -__t -__v')
+		.lean()
+		.exec((err, company) => {
+			if (err) return next(err);
+
+			if (company) {
+				res.render('company/info', {
+					company: company
+				});
+			} else {
+				next(new HtmlError(404));
+			}
+		})
+})
+
 module.exports = router;
