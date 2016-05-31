@@ -3,8 +3,8 @@ var queue = [];
 
 $(window).load(()=> {
     $('input').keyup(updateRequest);
-    $('.glyphicon-remove').click(deleteRequest);
-    $('.glyphicon-ok').click(submitRequest);
+    $('.btn-remove').click(deleteRequest);
+    $('.btn-ok').click(submitRequest);
 })
 
 function updateRequest(ev) {
@@ -12,7 +12,7 @@ function updateRequest(ev) {
     var type = $target.attr('type');
     var data = {
         data: {},
-        request: $target.closest('.row').attr('id')
+        request: $target.closest('tr').attr('id')
     }
     data.data[type] = $target.val();
 
@@ -46,13 +46,13 @@ function sendData(url, data, complete) {
 function deleteRequest(ev) {
     var $target = $(ev.target);
     var data = {
-        request: $target.closest('.row').attr('id')
+        request: $target.closest('tr').attr('id')
     }
     
     sendData('/request/delete', data, (jqXHR, status) => {
                     $.notify(jqXHR.responseJSON, 'info');
                     if (status == 'success') {
-                        $target.closest('.row').remove();
+                        $target.closest('tr').remove();
                     }
                 }
             );
@@ -61,14 +61,14 @@ function deleteRequest(ev) {
 function submitRequest(ev) {
     var $target = $(ev.target);
     var data = {
-        request: $target.closest('.row').attr('id')
+        request: $target.closest('tr').attr('id')
     }
     
     sendData('/request/submit', data, (jqXHR, status) => {
                     $.notify(jqXHR.responseJSON, 'info');
                     if (status == 'success') {
                         // todo: удалить кнопку принять, изменить статус
-                        $target.closest('.status-text').text('Принята')
+                        $target.closest('tr').find('.status-text').text('Принята')
                         $target.closest('.buttons').remove();
                         xhr = null;
                     }
