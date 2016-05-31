@@ -1,13 +1,12 @@
-doctype html
-head
-	script(src='/jquery/dist/jquery.js')
-	script(src="/bootstrap/dist/js/bootstrap.js")
-	link(href='/bootstrap/dist/css/bootstrap.css' rel='stylesheet')
-		
+extends ../layout
+block head
 	link(href='/css/error.css' rel='stylesheet')
 
-body
-	.container
-		h2 Error
-		h3= error.code
-		h4= error.message
+block content
+	#home.container
+	.row.text-center
+		.col-xs-12
+			h1 Ошбика
+			h2= error.code
+			h3= error.message
+			img(src='/img/404.jpg' )
