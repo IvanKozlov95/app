@@ -17,6 +17,10 @@ block content
 							h3
 								a(href='/request/bydate/?company='+company._id+'&date='+new Date().getFullYear()+'-'+("0" + (new Date().getMonth() + 1)).slice(-2)+'-'+("0" + (new Date().getDate())).slice(-2))
 									span.label.label-info= 'Заявки на сегодня'
+						.col-xs-2.col-xs-offset-1
+							h3
+								a(href='/archive/?company='+company._id+'&date='+new Date().getFullYear()+'-'+("0" + (new Date().getMonth() + 1)).slice(-2)+'-'+("0" + (new Date().getDate())).slice(-2))
+									span.label.label-info Архив заявок
 					.form
 						input(type='hidden' value=company._id name='id')
 						each value, field in company
