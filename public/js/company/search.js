@@ -1,8 +1,42 @@
 $(window).load(() => {
+	var count = 0;
+	var lastSearch;
 	$('#searchlist').btsListFilter('#searchinput', {
-	sourceTmpl: '<div class="company-div list-group-item">\
+	sourceTmpl: tmp,
+		sourceData: function(text, callback) {
+			return $.getJSON('search/?name='+text+'&start=0&end=10', function(json) {
+				count += json.length;
+				lastSearch = text;
+				$('.btn-more').show();
+				callback(json);
+			});
+		},
+		resetOnBlur: false
+	});
+
+	$('.btn-more').hide();
+	$('.btn-more').click(() => {
+		$.getJSON('search/?name='+lastSearch+'&start='+count+'&end='+(count+10), function(json) {
+			count += json.length;
+			addCompanies(json);
+		});
+	})
+})
+
+function addCompanies(companies) {
+	companies.forEach((el) => {
+		var newItem = tmp;
+		for (field in el) {
+			var regex = new RegExp('{'+field+'}','i');
+			newItem = newItem.replace(regex, el[field]);
+		}
+		$('#searchlist').append(newItem);
+	})
+}
+
+var tmp = '<div class="company-div list-group-item">\
 					<div class="row">\
-						<div class="col-sm-4">\
+						<div class="col-sm-6">\
 							<h3 list-group-item-heading" style="display:inline-block;">\
 								{name}\
 							</h3>\
@@ -11,7 +45,7 @@ $(window).load(() => {
 								</span>\
 							</a>\
 							<a id="modal-link"> \
-								<span class="btn glyphicon glyphicon glyphicon-edit list-group-item" data-toggle="modal" data-target="#exampleModal" data-companyid={_id}>\
+								<span class="btn glyphicon glyphicon glyphicon-edit list-group-item" data-toggle="modal" data-target="#exampleModal" data-companyid={_id} data-name={name}>\
 								</span>\
 							</a>\
 						</div>\
@@ -26,12 +60,4 @@ $(window).load(() => {
 							<img src="/avatars/{avatar}" height="150" width="150" />\
 						</div>\
 					</div>\
-				</div>',
-		sourceData: function(text, callback) {
-			return $.getJSON('search/?name='+text, function(json) {
-				callback(json);
-			});
-		},
-		resetOnBlur: false
-	});
-})
+				</div>'

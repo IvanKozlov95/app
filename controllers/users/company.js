@@ -26,6 +26,8 @@ router.get('/profile', mw.user.isCompany, function(req, res, next) {
 
 router.get('/search', (req, res, next) => {
 	var name = req.query.name;
+	var start = req.query.start;
+	var end = req.query.end;
 
 	if (name) {
 		var	Company = mongoose.model('Company');
@@ -33,6 +35,8 @@ router.get('/search', (req, res, next) => {
 		Company
 			.find({ 'name': { $regex: regex } })
 			.lean()
+			.skip(+start)
+			.limit(end - start)
 			.select('name avatar description')
 			.exec(function(err, companies) {
 				if (err) return next(err);

@@ -9,13 +9,17 @@ block head
 
 block content
 	#home
-	.row
-		.col-xs-8.col-xs-offset-2
-			form
-				.form-group.has-feedback
-					input#searchinput.form-control(type='search' placeholder='Название компании...')
-					span#clear.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
-			#searchlist.list-group
+	.container
+		.row
+			.col-xs-8.col-xs-offset-2
+				form
+					.form-group.has-feedback
+						input#searchinput.form-control(type='search' placeholder='Название компании...')
+						span#clear.btn.glyphicon.glyphicon-remove.form-control-feedback(aria-hidden='true', style='top: 0px; pointer-events: auto;')
+				#searchlist.list-group
+		.row
+			.col-xs-4.col-xs-offset-6
+				button.btn.btn-info.btn-md.btn-more Еще
 
 	#exampleModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalLabel')
 		.modal-dialog(role='document')
