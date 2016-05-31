@@ -5,22 +5,21 @@ block content
 	.container
 		.col-xs-12
 			div(id='' + company.id).profile
+				.container-fluid
+					.row
+						.col-xs-2
+							button.btn.btn-md.btn-info.pull-left#btn-new Новые заявки
+						.col-xs-2
+							button.btn.btn-md.btn-info.pull-left#btn-today Заявки на сегодня
+						.col-xs-2
+							button.btn.btn-md.btn-info#btn-archive Архив заявок
+						.col-xs-2
+							button.btn.btn-md.btn-info#btn-stat Статистика
 				form(role='form')
 					.row
 						.col-xs-1
 							h2.form-heaing= company.name
-						.col-xs-2.col-xs-offset-1
-							h3
-								a(href='/request/list/?id='+company._id)
-									span.label.label-info= 'Просмотр новых заявок'
-						.col-xs-2.col-xs-offset-1
-							h3
-								a(href='/request/bydate/?company='+company._id+'&date='+new Date().getFullYear()+'-'+("0" + (new Date().getMonth() + 1)).slice(-2)+'-'+("0" + (new Date().getDate())).slice(-2))
-									span.label.label-info= 'Заявки на сегодня'
-						.col-xs-2.col-xs-offset-1
-							h3
-								a(href='/archive/?company='+company._id+'&date='+new Date().getFullYear()+'-'+("0" + (new Date().getMonth() + 1)).slice(-2)+'-'+("0" + (new Date().getDate())).slice(-2))
-									span.label.label-info Архив заявок
+					br
 					.form
 						input(type='hidden' value=company._id name='id')
 						each value, field in company
@@ -55,5 +54,21 @@ block content
 
 
 				div(class='avatar')
-					img(src='\\avatars\\'+company._avatar alt='avatar' width='200' height='200').img-circle
-
+					img(src='/avatars/'+company._avatar alt='avatar' width='200' height='200').img-circle
+	script.
+		$('#btn-today').click((ev) => {
+			window.location.href = '/request/bydate/?company='+!{JSON.stringify(company._id)}+'&date='+new Date().getFullYear()+'-'+("0" + (new Date().getMonth() + 1)).slice(-2)+'-'+("0" + (new Date().getDate())).slice(-2);
+			ev.preventDefault();
+		})
+		$('#btn-new').click((ev) => {
+			window.location.href = '/request/list/?id='+company._id;
+			ev.preventDefault();
+		})
+		$('#btn-archive').click((ev) => {
+			window.location.href = '/archive/bydate/?date='+new Date().getFullYear()+'-'+("0" + (new Date().getMonth() + 1)).slice(-2)+'-'+("0" + (new Date().getDate())).slice(-2);
+			ev.preventDefault();
+		})
+		$('#btn-stat').click((ev) => {
+			window.location.href = '/company/stats';
+			ev.preventDefault();
+		})
