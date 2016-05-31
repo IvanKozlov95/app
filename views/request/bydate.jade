@@ -33,7 +33,7 @@ block content
 								td
 									p= item.time || 'Нет данных'
 								td
-									p= (item.client && item.client.name) || 'Нет данных'
+									a(href='/client/?id='+item.client._id)= (item.client && item.client.name) || 'Нет данных'
 								td
 									a(href='/request/info/?id='+item._id)
 										span.btn.glyphicon.glyphicon-info-sign
