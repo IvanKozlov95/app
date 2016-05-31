@@ -6,7 +6,8 @@ var statuses   	= require('../utils/status');
 module.exports = {
 	requestById: loadRequestById,
 	requestsByQuery: loadRequestsByQuery,
-	archiveByQueryForUser: loadArchiveByQueryForUser
+	archiveByQueryForUser: loadArchiveByQueryForUser,
+	archiveForUser: loadArchiveForUser
 }
 
 function loadRequestById(populate) {
@@ -85,5 +86,21 @@ function loadArchiveByQueryForUser(req, res, next) {
 			} else {
 				next(new HtmlError(404));
 			}
+		})
+}
+
+function loadArchiveForUser(req, res, next) {
+	var Request = mongoose.model('Archive');
+	var query = Request.find({});
+
+	query.where('company', req.user.id);
+
+	query
+		.lean()
+		.exec((err, archives) => {
+			if (err) return next(err);
+
+			res.archives = archives;
+			next();
 		})
 }
