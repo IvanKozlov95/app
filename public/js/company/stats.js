@@ -123,9 +123,9 @@ function createChartStatus(data) {
 	        	name: 'Заявки',
 	        	innerSize: '50%',
 	        	data: [
-	        		['Выполненые', data['Выполнена']],
-                    ['Просроченные', data['Просрочена']],
-	        		['Отклоненные', data['Отклонена'] || 0]
+	        		['Выполненые', data['Выполнена'] || 0],
+                    ['Просроченные', data['Просрочена'] || 0],
+	        		['Отклоненные', data['Удалена'] || 0]
 	        	]
 	        }
         ]
@@ -215,8 +215,3 @@ function createActiveClientsTable(data, count) {
             .appendTo($div);
     }
 }
-// function prepareData(data) {
-// 	data.each((el) => {
-
-// 	})
-// }

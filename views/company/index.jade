@@ -18,7 +18,7 @@ block content
 				form(role='form')
 					.row
 						.col-xs-1
-							h2.form-heaing= company.name
+							h2.form-heading= company.name
 					br
 					.form
 						input(type='hidden' value=company._id name='id')
@@ -59,7 +59,7 @@ block content
 			ev.preventDefault();
 		})
 		$('#btn-new').click((ev) => {
-			window.location.href = '/request/list/?id='+company._id;
+			window.location.href = '/request/list/?id='+!{JSON.stringify(company._id)};
 			ev.preventDefault();
 		})
 		$('#btn-archive').click((ev) => {
