@@ -82,7 +82,9 @@ class Server {
 		}
 
 		log.error(err);
-		res.status(500).send("Ой, что-то отвалилось.");
+		res.render('mechanics/error', {
+						error: new HtmlError(500)
+		});
 	}
 
 	_homeMiddleware(req, res, next) {

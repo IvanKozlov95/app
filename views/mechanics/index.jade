@@ -5,9 +5,14 @@ block content
 	#home.container
 		.row.text-center
 			.col-md-3.head-main
-				i.fa.fa-plus-circle.color-blue
-				h3
-					a(href='/register/?user=client') Зарегистрироваться
+				if !user
+					i.fa.fa-plus-circle.color-blue
+					h3
+						a(href='/register/?user=client') Зарегистрироваться
+				else
+					i.fa.fa-wrench.color-blue
+					h3
+						a(href='/'+user.__t+'/profile') Профиль
 			.col-md-3.head-main
 				i.fa.fa-search.color-blue
 				h3
