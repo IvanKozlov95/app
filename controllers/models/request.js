@@ -30,19 +30,20 @@ router.get('/', (req, res, next) => {
 		});
 })
 
-router.post('/create', (req, res, next) => {
-	var options = req.body;
-	var Request = mongoose.model('Request');
-	options.date = commonUtil.setDateWithOutTime(options.date);
+router.post('/create', 	mw.user.isClient,
+						(req, res, next) => {
+							var options = req.body;
+							var Request = mongoose.model('Request');
+							options.date = commonUtil.setDateWithOutTime(options.date);
 
-	if (!commonUtil.isDateValid(options.date, options.time)) return next(new HtmlError(400, 'Назад в будущее??'));
+							if (!commonUtil.isDateValid(options.date, options.time)) return next(new HtmlError(400, 'Назад в будущее??'));
 
-	var _new = new Request(options);
-	_new.save((err, request) => {
-		if (err) return next(err);
+							var _new = new Request(options);
+							_new.save((err, request) => {
+								if (err) return next(err);
 
-		res.status(200).json('Заявка была созадана. Письмо отправлено.')
-	});
+								res.status(200).json('Заявка была созадана. Письмо отправлено.')
+							});
 })
 
 router.get('/list', mw.user.haveRights, (req, res, next) => {
