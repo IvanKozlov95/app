@@ -15,6 +15,10 @@ function saveCompanyId(ev) {
 	// ev - событие открытия модуля
 	var button = $(event.target);
 	companyId = button.data('companyid');
+
+	//fills model header
+	// why here? f*ck you!
+	$(modalId).find('form').prepend('<h3 class="form-heading">' + button.data('name') + '</h3>')
 }
 
 function enableValidator() {
@@ -55,11 +59,19 @@ closeModal = function() {
 	$(modalId).modal('hide');
 };
 
+function removeFromHeading() {
+	$(modalId).find('.form-heading').remove();
+	$(modalId + ' #date').val('');
+	$(modalId + ' #time').val('');
+	$(modalId + ' #persons').val('');
+	$(modalId + ' #message-text').val('');
+}
+
 function bindEvents() {
 	eventHelper.addEvent($(modalId), 'show.bs.modal', saveCompanyId);
 	eventHelper.addEvent($(modalId), 'shown.bs.modal', enableValidator);
+	eventHelper.addEvent($(modalId), 'hide.bs.modal', removeFromHeading);
 	eventHelper.addEvent($(modalId), 'hidden.bs.modal', () => {
-		// form.validator().off('submit');
 		eventHelper.removeEvent(form.validator(), 'submit')
 		form.validator('destroy');
 	});
