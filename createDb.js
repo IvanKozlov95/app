@@ -42,18 +42,19 @@ function createRequests(cb) {
 		{ client: 'Vasya', company: 'company1', date: new Date(2016,4,29), time: '20:00' },
 		{ client: 'Petya', company: 'company1', date: new Date(2016,4,29), time: '12:00' }, 
 		// новые
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '21:00' },
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '12:00' },
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '12:00' },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '21:00' },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '23:00' },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '12:00' },
+		{ client: 'Vasya', company: 'company1', date: new Date(2016,4,31), time: '15:00' },
 		// принятые
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '02:00', status: statuses.accepted },
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '02:30', status: statuses.accepted },
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '02:45', status: statuses.accepted },
-		{ client: 'user1', company: 'company1', date: new Date(2016,4,30), time: '03:00', status: statuses.accepted },
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '23:00', status: statuses.accepted }, 
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '23:00', status: statuses.accepted }, 
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '23:00', status: statuses.accepted }, 
-		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,30), time: '23:00', status: statuses.accepted },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '02:00', status: statuses.accepted },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '02:30', status: statuses.accepted },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '02:45', status: statuses.accepted },
+		{ client: 'user1', company: 'company1', date: new Date(2016,4,31), time: '03:00', status: statuses.accepted },
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '23:00', status: statuses.accepted }, 
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '23:00', status: statuses.accepted }, 
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '23:00', status: statuses.accepted }, 
+		{ client: 'Ivan', company: 'company1', date: new Date(2016,4,31), time: '23:00', status: statuses.accepted },
 	];
 	async.each(list, createSingleRequest, cb)
 }
