@@ -1,5 +1,6 @@
 module.exports = {
     user: require('./user'),
     loadUser: require('./loadUser'),
-    load: require('./load')
+    load: require('./load'),
+    archive: require('./archive')
 }
