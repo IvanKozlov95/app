@@ -20,4 +20,22 @@ router.get('/bydate',	mw.user.isCompany,
 							}
 						})
 
+router.get('/bydayofweek',	mw.user.isCompany,
+							mw.archive.aggregateByField('dayOfWeek'),
+							(req, res, next) => {
+								res.json(req.results);
+							})
+
+router.get('/bystatus',	mw.user.isCompany,
+						mw.archive.aggregateByField('status'),
+							(req, res, next) => {
+								res.json(req.results);
+							})
+
+router.get('/byclient',	mw.user.isCompany,
+						mw.archive.getActiveClients(5),
+							(req, res, next) => {
+								res.json(req.results);
+							})
+
 module.exports = router;
