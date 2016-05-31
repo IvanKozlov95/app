@@ -28,19 +28,27 @@ block content
 										label= field
 									.col-xs-4.col-xs-offset-1
 										input(type='text' name=field placeholder='Ваш ' + field value=value).form-control
+						br
 						.row
 							.form-group
 								.col-xs-1
 									label Описание
 								.col-xs-6.col-xs-offset-1
 									textarea(name='description' cols=100 rows=10).form-control= company._description
-					.row
-						.form-group
-							.col-xs-1
-								label Avatar
-							.col-xs-2.col-xs-offset-1
-								input(type='file' name='avatar')
-					input(type='submit' value='Save').btn.btn-md.btn-primary
+						br
+						.row
+							.form-group
+								.col-xs-1
+									label Avatar
+								.col-xs-4.col-xs-offset-1
+									input(type='file' name='avatar').form-control
+						br
+						.row
+							.form-group
+								.col-xs-1.col-xs-offset-2
+									input(type='submit' value='Save').btn.btn-md.btn-primary
+					
+
 
 				div(class='avatar')
 					img(src='\\avatars\\'+company._avatar alt='avatar' width='200' height='200').img-circle

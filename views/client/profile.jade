@@ -12,22 +12,23 @@ block content
 							- continue;
 				p.text-primary.text-capitalize= field
 				p.big= value
-			//- div(class='avatar')
-			//- 	img(src='\\avatars\\'+client.avatar alt='avatar' width='200' height='200').img-circle
+			div(class='avatar')
+				img(src='/avatars/'+client.avatar alt='avatar' width='200' height='200').img-circle
 		br
 		br
 		.table-responsive
-			table#mytable.table.table-bordred.table-striped
-				thead
-					tr
-						th Компания
-						th Дата
-						th Время
-						th Статус
-						th Принять
-						th Отказаться
-				tbody
-					if requests.length > 0
+			if requests.length > 0
+				h3 Текущие заявки
+				table#mytable.table.table-bordred.table-striped
+					thead
+						tr
+							th Компания
+							th Дата
+							th Время
+							th Статус
+							th Принять
+							th Отказаться
+					tbody
 						each req, ind in requests
 							tr(id=''+req._id)
 								td
@@ -53,7 +54,3 @@ block content
 								td 
 									button.btn.btn-warning.btn-xs.btn-remove
 										span.glyphicon.glyphicon-remove
-					else
-						h3
-							strong Заявок нет
-		
