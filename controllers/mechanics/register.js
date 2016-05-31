@@ -22,7 +22,7 @@ router.get('/', mw.user.isAnon,
 
 router.post('/', upload.single('logo'), function(req, res, next) {
 	var user = new Client( {
-			username: req.body.username,
+			login: req.body.login,
 			password: req.body.password,
 			name: req.body.name,
 			phone: req.body.phone,

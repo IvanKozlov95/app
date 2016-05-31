@@ -2,7 +2,7 @@ extends ../layout
 
 block head
 	link(href='/css/signin.css' rel='stylesheet')
-	script(src='/js/validator.js')
+	script(src='/bootstrap-validator/dist/validator.js')
 	script(src='/js/registration.js')
 
 block content
@@ -11,18 +11,18 @@ block content
 		.row.text-center
 			.col-md-12
 				form#client-form(role='form').form-signin
-					h2.form-signin-heading Register client
+					h2.form-signin-heading Регистрация
 					.form-group.has-feedback
 						label(for='username').sr-only Username
-						input(type='text' name='username' placeholder='login' required='' data-error='Please, fill this field').form-control
+						input(type='text' name='login' placeholder='login' required='' data-error='Пожалуйста, заполните это поле').form-control
 						.help-block.with-errors
 					.form-group
 						label(for='password').sr-only Password
-						input(type='password' name='password' placeholder='password' required='' data-error='Please, fill this field').form-control
+						input(type='password' name='password' placeholder='password' required='' data-error='Пожалуйста, заполните это поле').form-control
 						.help-block.with-errors
 					.form-group
 						label(for='friendlyName').sr-only Name
-						input(type='text' name='friendlyName' placeholder='name' data-error='How should I call you?').form-control
+						input(type='text' name='name' placeholder='name' data-error='Как мне Вас называть?').form-control
 						.help-block.with-errors
 					.form-group
 						label(for='phone').sr-only Phone
@@ -37,26 +37,26 @@ block content
 		.row
 			.col-md-12
 				form#company-form(role='form').form-signin
-					h2.form-signin-heading Register company
+					h2.form-signin-heading Регистрация
 					.form-group.has-feedback
 						label(for='username').sr-only Username
-						input(type='text' name='username' placeholder='login' required='' data-error='Please, fill this field').form-control
+						input(type='text' name='login' placeholder='login' required='' data-error='Пожалуйста, заполните это поле').form-control
 						.help-block.with-errors
 					.form-group
 						label(for='password').sr-only Password
-						input(type='password' name='password' placeholder='password' required='' data-error='Please, fill this field').form-control
+						input(type='password' name='password' placeholder='password' required='' data-error='Пожалуйста, заполните это поле').form-control
 						.help-block.with-errors
 					.form-group
 						label(for='name').sr-only Name
-						input(type='text' name='name' placeholder='name' data-error='How should I call you?' required='').form-control
+						input(type='text' name='name' placeholder='name' data-error='Как мне Вас называть' required='').form-control
 						.help-block.with-errors
 					.form-group
 						label(for='address').sr-only Address
-						input(type='text' name='address' placeholder='address' data-error='Please, fill this field').form-control
+						input(type='text' name='address' placeholder='address' data-error='Пожалуйста, заполните это поле').form-control
 						.help-block.with-errors.form-group
 					.form-group
 						label(for='desc').sr-only Desc
-						textarea(name='desc' placeholder='Describe you company').form-control
+						textarea(name='desc' placeholder='Опишите вашу компанию' row=10 cols=40).form-control
 					.form-group
 						label(for='logo').sr-only Logo
 						input(type='file' name='logo' accept='image/*').form-control
