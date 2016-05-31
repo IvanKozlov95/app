@@ -43,6 +43,14 @@ router.get('/search', (req, res, next) => {
 	}
 })
 
+router.get('/stats', mw.user.isCompany,
+					mw.load.archiveForUser,
+					(req, res, next) => {
+						res.render('company/stats', {
+							archives: req.archives
+						})
+					});
+
 router.get('/', (req, res, next) => {
 	var id = req.query.id;
 	var Company = mongoose.model('Company');

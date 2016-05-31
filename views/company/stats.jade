@@ -1,0 +1,27 @@
+extends ../layout
+
+block head
+	script(src='/highcharts/highcharts.js')
+	script(src='/js/company/stats.js')
+
+block content
+	#home
+	.container
+		.col-xs-8.col-xs-offset-2
+			.row
+				h2
+					strong Статистика
+			.row
+				.col-xs-12#daysofweek
+					p Заявки по дням недели
+			.row
+				.col-xs-6#status
+					p Общее количество заявок
+				br
+				.col-xs-6#activeclients
+					strong Активные пользователи
+			.row
+				.col-xs-6
+					p Заявки по дням недели
+				.col-xs-6
+					p Нагруженность по дням
