@@ -22,6 +22,14 @@
             createActiveClientsTable(jqXHR.responseJSON, 5);
         }
     })
+
+    $.ajax({
+        url: '/archive/bytime',
+        method: 'GET',
+        complete: (jqXHR, status) => {
+            createChartTime(jqXHR.responseJSON);
+        }
+    })
 }());
 
 function createChartDaysOfWeek(data) {
@@ -122,6 +130,80 @@ function createChartStatus(data) {
 	        }
         ]
 	})
+}
+
+function createChartTime(data) {
+    var ours = ['00',
+                '01',
+                '02',
+                '03',
+                '04',
+                '05',
+                '06',
+                '07',
+                '08',
+                '09',
+                '10',
+                '11',
+                '12',
+                '13',
+                '14',
+                '15',
+                '16',
+                '17',
+                '18',
+                '19',
+                '20',
+                '21',
+                '22',
+                '23',];
+    var series = [{
+        name: 'Заявки',
+        data: []
+    }];
+    for (i in ours) {
+        series[0].data.push(data[ours[i]] || 0);
+    }
+    $('#time').highcharts({
+       chart: {
+            type: 'areaspline'
+        },
+        title: {
+            text: 'Нагрузка по часам'
+        },
+        // legend: {
+        //     layout: 'vertical',
+        //     align: 'left',
+        //     verticalAlign: 'top',
+        //     x: 150,
+        //     y: 100,
+        //     floating: true,
+        //     borderWidth: 1,
+        //     backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+        // },
+        xAxis: {
+            categories: ours,
+        },
+        yAxis: {
+            allowDecimals: false,
+            title: {
+                text: 'Заявки'
+            }
+        },
+        tooltip: {
+            shared: true,
+            valueSuffix: ' заявок'
+        },
+        credits: {
+            enabled: false
+        },
+        plotOptions: {
+            areaspline: {
+                fillOpacity: 0.5
+            }
+        },
+        series: series
+    })
 }
 
 function createActiveClientsTable(data, count) {

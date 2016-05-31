@@ -14,6 +14,8 @@ function aggregateByField(field) {
 		var query = Archive.find({});
 
 		query.where('company', req.user.id);
+		if (field == 'time')
+			query.where('status', statuses.done);
 		query
 			.lean()
 			.exec((err, archives) => {
@@ -26,6 +28,9 @@ function aggregateByField(field) {
 					case 'status':
 						req.results = aggregateByStatus(archives);
 						break;
+					case 'time':
+						req.results = aggregateByTime(archives);
+						break;
 				}
 				next();
 			});
@@ -33,15 +38,7 @@ function aggregateByField(field) {
 }
 
 function aggregateByDaysOfWeek(requests) {
-	var result = {
-		0: 0,
-		1: 0,
-		2: 0,
-		3: 0,
-		4: 0,
-		5: 0,
-		6: 0
-	};
+	var result = [0,0,0,0,0,0,0];
 	requests.forEach((el) => {
 		result[el.date.getDay()]++;
 	});
@@ -55,6 +52,19 @@ function aggregateByStatus(requests) {
 			result[el.status]++;
 		} else {
 			result[el.status] = 1;
+		}
+	});
+	return result;
+}
+
+function aggregateByTime(requests) {
+	var result = {};
+	requests.forEach((el) => {
+		var ours = el.time.substring(0,2);
+		if (result.hasOwnProperty(ours)) {
+			result[ours]++;
+		} else {
+			result[ours] = 1;
 		}
 	});
 	return result;

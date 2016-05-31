@@ -38,4 +38,10 @@ router.get('/byclient',	mw.user.isCompany,
 								res.json(req.results);
 							})
 
+router.get('/bytime',	mw.user.isCompany,
+						mw.archive.aggregateByField('time'),
+							(req, res, next) => {
+								res.json(req.results);
+							})
+
 module.exports = router;
