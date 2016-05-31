@@ -1,0 +1,41 @@
+extends ../layout
+
+block head
+	script(src="/js/archive/search.js")
+
+block content
+	#home
+	.content
+		.col-xs-8.col-xs-offset-2
+			.row
+				.col-xs-3
+					h2 Архив заявок
+				.col-xs-3.col-xs-offset-6
+					#custom-search-input(style='padding-top: 20px')
+						.input-group
+							input.search-query-date.form-control(type='date', placeholder='Search' data-company=''+user._id value=date.getFullYear()+'-'+("0" + (date.getMonth() + 1)).slice(-2)+'-'+("0" + (date.getDate())).slice(-2))
+							span.input-group-btn
+								button.btn.btn-danger(type='button')#btn-search
+									span.glyphicon.glyphicon-search
+			.row
+				table.table
+					thead
+						tr
+							th Дата
+							th Время
+							th Клиент
+							th Статус
+					tbody
+						each item in archives
+							tr
+								td
+									p= item.date.getDate()+'/'+item.date.getMonth()+'/'+item.date.getFullYear() || 'Нет данных'
+								td
+									p= item.time || 'Нет данных'
+								td
+									a(href='/client/?id='+item.client._id)= (item.client && item.client.name) || 'Нет данных'
+								td
+									p= item.status
+								td
+									a(href='/request/info/?id='+item._id)
+										span.btn.glyphicon.glyphicon-info-sign
