@@ -17,12 +17,13 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "^3.3.6",
-    "jquery": "^2.2.4",
+    "bootstrap-list-filter": "^0.3.2",
     "highcharts": "^4.2.5",
     "bootstrap-select": "^1.10.0",
-    "bootstrap-list-filter": "^0.3.2",
     "bootstrap-validator": "^0.10.2",
-    "bootstrap-datepicker": "^1.6.1",
+    "bootstrap": "^3.3.6",
+    "moment": "^2.13.0",
+    "jquery": "^2.2.4",
+    "bootstrap-datepicker": "^1.6.1"
   }
 }
