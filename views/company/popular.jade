@@ -1,0 +1,16 @@
+extends ../layout
+
+block head
+	link(href='/css/popular.css', rel='stylesheet')
+
+block content
+	#home
+	.row
+		.col-xs-8.col-xs-offset-2
+			.cols
+				each item in companies
+					.box
+						h1= item.name
+						h3= 'Количество заявок: ' + item.count
+						div(class='avatar')
+							img(src='/avatars/'+item.avatar alt='avatar' width='200' height='200').img-circle

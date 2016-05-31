@@ -4,6 +4,7 @@ var express   	  = require('express'),
 	Company  	  = mongoose.model('Company'),
     HtmlError     = require('../../libs/HtmlError'),
 	mw         	  = require('../../mw/'),
+	statuses 	  = require('../../utils/status'),
 	log 	      = require('../../utils/logger')(module);
 
 router.get('/profile', mw.user.isCompany, function(req, res, next) {
@@ -50,6 +51,57 @@ router.get('/stats', mw.user.isCompany,
 							archives: req.archives
 						})
 					});
+
+router.get('/popular', (req, res, next) => {
+	var Archive = mongoose.model('Archive');
+
+	Archive
+		.aggregate([
+			{
+				$match: {
+					'status': statuses.done
+				}
+			},
+	        {
+	            $group: {
+	                _id: '$company',  //$region is the column name in collection
+	                count: {$sum: 1}
+	            }
+	        },
+	        {
+            	$sort: { count: -1 }
+            }
+	    ])
+	    .exec(function (err, result) {
+	        if (err) {
+	            next(err);
+	        } else {
+	        	Company
+	        		.find({
+	        			'_id': {
+	        				$in: result.map((el) => {
+	        					return el._id
+	        				})
+	        			}
+	        		})
+	        		.lean()
+	        		.exec((err, companies) => {
+	        			if (err) return next(err);
+	        			var results = companies.map((el, ind) => {
+	        				return {
+	        					name: el.name,
+	        					avatar: el.avatar,
+	        					count: result[ind].count 
+	        				}
+	        			})
+	        			res.render('company/popular', {
+			            	companies: results
+			            });
+	           			// res.json(companies);
+	        		});
+	        }
+	    });
+})
 
 router.get('/', (req, res, next) => {
 	var id = req.query.id;
