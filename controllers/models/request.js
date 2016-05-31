@@ -146,7 +146,8 @@ router.get('/info',	mw.user.isAuthentificated,
 						});
 					})
 
-router.get('/bydate', mw.load.requestsByQuery,
+router.get('/bydate', mw.user.isCompany,
+					mw.load.requestsByQuery,
 					(req, res, next) => {
 						if (req.xhr) {
 							res.json(req.requests);
