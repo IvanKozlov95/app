@@ -5,7 +5,8 @@ var express     = require('express'),
 	mw			= require('../../mw/')
 	commonUtil	= require('../../utils/common'),
 	log 	    = require('../../utils/logger')(module),
-	statuses   	= require('../../utils/status');
+	statuses   	= require('../../utils/status'),
+	mailer 		= require('../../utils/mailer');
 
 router.get('/', (req, res, next) => {
 	var id = commonUtil.castToObjectId(req.query.id);
@@ -42,7 +43,9 @@ router.post('/create', 	mw.user.isClient,
 							_new.save((err, request) => {
 								if (err) return next(err);
 
-								res.status(200).json('Заявка была созадана. Письмо отправлено.')
+								mailer.newRequest(request._id);
+
+								res.status(200).json('Заявка была созадана.')
 							});
 })
 
@@ -104,7 +107,7 @@ router.post('/submit',	mw.user.isAuthentificated,
 })
 
 router.post('/reject',	mw.user.isCompany,
-						mw.load.requestById(''),
+						mw.load.requestById('client company'),
 						(req, res, next) => {
 							req.request.status = statuses.rejected;
 							req.request.message2 = req.body.message2;
@@ -112,7 +115,9 @@ router.post('/reject',	mw.user.isCompany,
 								if (err) return next(err);
 
 								global.requestManager.deleteRequest({ 
-									company: req.user.id,
+									companyEmail: req.request.company.email,
+									clientEmail: req.request.client.email,
+									message: req.body.message2,
 									request: req.request._id.toString(),
 									status: req.request.status
 								});

@@ -1,5 +1,7 @@
 var mongoose = require('../libs/mongoose'),
-    Schema   = mongoose.Schema;
+    Schema   = mongoose.Schema,
+    statuses = require('../utils/status'),
+    mailer 	 = require('../utils/mailer');
 
 var RequestSchema = new Schema({
 	client: { type: Schema.Types.ObjectId, ref: 'Client' },
@@ -41,8 +43,15 @@ RequestSchema.statics.archive = function(id, status) {
 				if (status) request.status = status;
 				
 				var _new = new Archive(request);
-				_new.save((err) => {
+				_new.save((err, archive) => {
 					if (err) reject(err);
+
+					if (archive.status == statuses.rejected) {
+						mailer.rejectRequest(archive.id);
+					} 
+					if (archive.status == statuses.done) {
+						mailer.doneRequest(archive.id);
+					}
 
 					resolve();
 				})

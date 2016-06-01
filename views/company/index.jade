@@ -3,6 +3,19 @@ extends ../layout
 block content
 	#home
 	.container
+		.row.text-center.space-pad
+			.col-md-3
+				i.fa.fa-camera.fa-4x.color-blue
+				h4 Новые заявки 
+			.col-md-3
+				i.fa.fa-briefcase.fa-4x.color-blue
+				h4 Заявки на сегодня
+			.col-md-3
+				i.fa.fa-desktop.fa-4x.color-blue
+				h4 Архив заявок
+			.col-md-3
+				i.fa.fa-folder.fa-4x.color-blue
+				h4 Статистика
 		.col-xs-12
 			div(id='' + company.id).profile
 				.container-fluid

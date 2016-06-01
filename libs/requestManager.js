@@ -47,15 +47,16 @@ class RequestManager {
 			});
 	}
 
-	_sendNotifications() {
+	_watch() {
 		var currentTime = new Date();
 		currentTime = currentTime.getHours()+':'+currentTime.getMinutes();
 		var i = 0;
 		while (this.queue 
 				&& this.queue.length > 0 
 				&& currentTime >= this.queue[0].time) {
+			var item = this.queue.shift();
 			this._archiveRequest({ 
-				request: this.queue.shift().request, 
+				request: item.request, 
 				status: statuses.done
 			});
 			i++;
@@ -65,12 +66,13 @@ class RequestManager {
 	}
 
 	run() {	
-		this.timer = setInterval(this._sendNotifications.bind(this), 60000)
+		this.timer = setInterval(this._watch.bind(this), 30000)
 	}
 
 	_archiveRequest(info) {
 		var Request = mongoose.model('Request');
 		var promise = Request.archive(info.request, info.status);
+
 		promise
 			.then(() => {
 				Request
@@ -85,7 +87,6 @@ class RequestManager {
 			.catch((err) => {
 				throw err;
 			})
-		// todo: send mail
 	}
 
 	deleteRequest(options) {
@@ -123,6 +124,8 @@ class RequestManager {
 					} else {
 						log.info('Новая заявка не на сегодня. id: ' + id);
 					}
+
+					mailer.submitRequest(id);
 				});
 	}
 

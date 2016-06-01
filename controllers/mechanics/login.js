@@ -20,9 +20,10 @@ router.post('/', mw.user.isAnon,
                       if (err) return next(err);
                       if (user) {
                         req.logIn(user, function(err) {
+                          log.info(req.url)
                           return err
                             ? next(err)
-                            : res.redirect('/');
+                            : res.redirect(req.url);
                         });
                       } else {
                           next(new HtmlError(400));

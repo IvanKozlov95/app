@@ -22,54 +22,52 @@ block content
 				h3
 					a(href='/company/popular') Популярные компании
 			.col-md-3.head-main
-				i.fa.fa-users.color-blue
-				h3
-					a(href='/register/?user=company') Вы - компания
+				if !user
+					i.fa.fa-users.color-blue
+					h3
+						a(href='/register/?user=company') Новая компания
+				else 
+					i.fa.fa-edit.color-blue
+					h3
+						a(href='#about') О сайте
 	// End Header section
 	// About Section
 	section#about.for-full-back.color-light
 	.container
 		.row.text-center
 			.col-md-8.col-md-offset-2
-				h1 ABOUT COMPANY
+				h1 О проекте
 				h4
 					strong
-						| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-						| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+						| Проект разработан как выпускная квалифкационная работа
 		.row.text-center
 			.col-md-12
-				h2 Lorem ipsum dolor sit amet
+				h2 О системе DoReserve
 				p
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
-					| Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					| Curabitur nec nisl odio. Mauris vehicula at nunc id posuere.
+					| Система предназначена для создания и обслуживания заявок для резервации столиков в кафе и ресторанах.
+				p
+					| Если Вы гость - система поможет Вам забронировать место в ресторане Вашей мечты.
+				p
+					| Если Вы компания - система поможет Вам: 
+					| увеличить поток клиетов Вашего заведения,
+					| собирать полезную статистику, которая поможет понять, где сильны и слабые стороны у Вашего бизнеса
+					| вести учет принятых и выполненных заявок,
+					| напоминать Вам и Вашим клиентам о бронировании столика(пока только по email, простите)
 		.row.text-center.space-pad
+			h2 Система позволит
 			.col-md-3
 				.about-div
 					i.fa.fa-camera.fa-4x.color-blue
-					h3 30+ Clients 
+					h3 Увеличить поток клиентов 
 			.col-md-3
 				.about-div
 					i.fa.fa-briefcase.fa-4x.color-blue
-					h3 90+ Projects	
+					h3 Составлять расписание брони столов
 			.col-md-3
 				.about-div
 					i.fa.fa-desktop.fa-4x.color-blue
-					h3 40+ Offices 
+					h3 Просматривать статистику 
 			.col-md-3
 				.about-div
 					i.fa.fa-folder.fa-4x.color-blue
-					h3 10+ Countries 
+					h3 Управлять входящими заявками

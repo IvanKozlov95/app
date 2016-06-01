@@ -6,11 +6,12 @@ block head
 block content
 	#home
 	.row
-		.col-xs-8.col-xs-offset-2
+		.col-xs-6.col-xs-offset-3
 			.cols
 				each item in companies
 					.box
 						h1= item.name
-						h3= 'Количество заявок: ' + item.count
+						h3= 'Количество заявок: '
+						h1= '      ' + item.count
 						div(class='avatar')
 							img(src='/avatars/'+item.avatar alt='avatar' width='200' height='200').img-circle

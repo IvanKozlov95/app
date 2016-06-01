@@ -112,6 +112,7 @@ class Server {
         app.use('/login', Controllers.login);
         app.use('/register', Controllers.register);
         app.use('/logout', Controllers.logout);
+        app.use('/about', Controllers.about);
     }
 }
 
