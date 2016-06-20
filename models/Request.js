@@ -45,13 +45,15 @@ RequestSchema.statics.archive = function(id, status) {
 				var _new = new Archive(request);
 				_new.save((err, archive) => {
 					if (err) reject(err);
-
-					if (archive.status == statuses.rejected) {
-						mailer.rejectRequest(archive.id);
-					} 
-					if (archive.status == statuses.done) {
-						mailer.doneRequest(archive.id);
+					if (archive) {
+						if (archive.status == statuses.rejected) {
+							mailer.rejectRequest(archive._id);
+						} 
+						if (archive.status == statuses.done) {
+							mailer.doneRequest(archive.id);
+						}
 					}
+
 
 					resolve();
 				})
